@@ -13,6 +13,8 @@
 #define GAIN_MAX		63		/* 最大增益 */
 #define GAIN_STEP		1		/* 增益步长 */
 
+
+
 /* WM8978 音频输入通道控制选项, 可以选择多路，比如 MIC_LEFT_ON | LINE_ON */
 typedef enum
 {
@@ -42,12 +44,12 @@ typedef enum
 #define WM8978_I2C                          I2C1
 #define WM8978_I2C_CLK()                    __HAL_RCC_I2C1_CLK_ENABLE()
 
-#define WM8978_I2C_SCL_PIN                  GPIO_PIN_6                  
+#define WM8978_I2C_SCL_PIN                  GPIO_PIN_8                  
 #define WM8978_I2C_SCL_GPIO_PORT            GPIOB                       
 #define WM8978_I2C_SCL_GPIO_CLK()           __HAL_RCC_GPIOB_CLK_ENABLE()
 #define WM8978_I2C_SCL_AF                   GPIO_AF4_I2C1
 
-#define WM8978_I2C_SDA_PIN                  GPIO_PIN_7                 
+#define WM8978_I2C_SDA_PIN                  GPIO_PIN_9                 
 #define WM8978_I2C_SDA_GPIO_PORT            GPIOB                       
 #define WM8978_I2C_SDA_GPIO_CLK()           __HAL_RCC_GPIOB_CLK_ENABLE()
 #define WM8978_I2C_SDA_AF                   GPIO_AF4_I2C1
@@ -101,19 +103,19 @@ void wm8978_NotchFilter(uint16_t _NFA0, uint16_t _NFA1);
 #define WM8978_LRC_PIN             	   GPIO_PIN_12
 #define WM8978_LRC_AF                  GPIO_AF5_SPI2
 
-#define WM8978_BCLK_GPIO_CLK()         __HAL_RCC_GPIOD_CLK_ENABLE()
-#define WM8978_BCLK_PORT            	 GPIOD
-#define WM8978_BCLK_PIN             	 GPIO_PIN_3
+#define WM8978_BCLK_GPIO_CLK()         __HAL_RCC_GPIOB_CLK_ENABLE()
+#define WM8978_BCLK_PORT            	 GPIOB
+#define WM8978_BCLK_PIN             	 GPIO_PIN_13
 #define WM8978_BCLK_AF                 GPIO_AF5_SPI2
 
-#define WM8978_ADCDAT_GPIO_CLK()       __HAL_RCC_GPIOC_CLK_ENABLE()
-#define WM8978_ADCDAT_PORT             GPIOC
-#define WM8978_ADCDAT_PIN              GPIO_PIN_2
+#define WM8978_ADCDAT_GPIO_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
+#define WM8978_ADCDAT_PORT             GPIOB
+#define WM8978_ADCDAT_PIN              GPIO_PIN_14
 #define WM8978_ADCDAT_AF               GPIO_AF5_SPI2
 
-#define WM8978_DACDAT_GPIO_CLK()       __HAL_RCC_GPIOI_CLK_ENABLE()
-#define WM8978_DACDAT_PORT             GPIOI
-#define WM8978_DACDAT_PIN              GPIO_PIN_3
+#define WM8978_DACDAT_GPIO_CLK()       __HAL_RCC_GPIOB_CLK_ENABLE()
+#define WM8978_DACDAT_PORT             GPIOB
+#define WM8978_DACDAT_PIN              GPIO_PIN_15
 #define WM8978_DACDAT_AF               GPIO_AF5_SPI2
 
 #define WM8978_MCLK_GPIO_CLK()         __HAL_RCC_GPIOC_CLK_ENABLE()

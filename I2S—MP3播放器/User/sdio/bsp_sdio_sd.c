@@ -98,10 +98,7 @@
   * @{
   */
 SD_HandleTypeDef uSdHandle;
-//发送标志位
-volatile uint8_t TX_Flag=0;
-//接受标志位
-volatile uint8_t RX_Flag=0; 
+
 /**
   * @}
   */ 
@@ -454,7 +451,6 @@ void HAL_SD_AbortCallback(SD_HandleTypeDef *hsd)
   */
 void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
 {
-  TX_Flag=1; //标记写完成 
   BSP_SD_WriteCpltCallback();
 }
 
@@ -465,7 +461,6 @@ void HAL_SD_TxCpltCallback(SD_HandleTypeDef *hsd)
   */
 void HAL_SD_RxCpltCallback(SD_HandleTypeDef *hsd)
 {
-  RX_Flag=1;
   BSP_SD_ReadCpltCallback();
 }
 

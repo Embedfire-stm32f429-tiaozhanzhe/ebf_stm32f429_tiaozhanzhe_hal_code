@@ -20,7 +20,7 @@
 	在访问I2C设备前，请先调用 i2c_CheckDevice() 检测I2C设备是否正常，该函数会配置GPIO
 */
 
-#include "./Bsp/wm8978/bsp_i2c_gpio.h"
+#include "./wm8978/bsp_i2c_gpio.h"
 
 /*
 	安富莱STM32-V5开发板 i2c总线GPIO:

@@ -60,7 +60,7 @@
 #define HAL_DMA2D_MODULE_ENABLED   
 /*#define HAL_ETH_MODULE_ENABLED */    
 #define HAL_FLASH_MODULE_ENABLED     
-#define HAL_NAND_MODULE_ENABLED    
+#define HAL_NAND_MODULE_ENABLED  
 #define HAL_NOR_MODULE_ENABLED     
 #define HAL_PCCARD_MODULE_ENABLED   
 #define HAL_SRAM_MODULE_ENABLED    
@@ -150,7 +150,7 @@
 #define  VDD_VALUE                    (3300U) /*!< Value of VDD in mv */
 #define  TICK_INT_PRIORITY            (0x0FU) /*!< tick interrupt priority */           
 #define  USE_RTOS                     0     
-#define  PREFETCH_ENABLE              1              
+#define  PREFETCH_ENABLE              0              
 #define  INSTRUCTION_CACHE_ENABLE     1
 #define  DATA_CACHE_ENABLE            1
 

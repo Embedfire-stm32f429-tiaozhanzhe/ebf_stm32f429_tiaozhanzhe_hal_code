@@ -15,9 +15,11 @@
 ******************************************************************************
 */
 #include "bsp_wm8978.h"  
-#include "bsp_debug_usart.h"
+#include "./usart/bsp_debug_usart.h"
 #include "mp3Player.h"
 #include "main.h"
+
+
 /* 这个地址只要与STM32外挂的I2C器件地址不一样即可 */
 #define I2C_OWN_ADDRESS7      0x0A
 uint32_t AudioTotalSize ;         /* This variable holds the total size of the audio file */
@@ -40,8 +42,8 @@ static uint8_t wm8978_WriteReg(uint8_t _ucRegAddr, uint16_t _usValue);
 static __IO uint32_t  WM8978_I2CTimeout = WM8978_I2C_LONG_TIMEOUT;
 /*
 	wm8978寄存器缓存
-	由于WM8978的I2C两线接口不支持读取操作，因此寄存器值缓存在内存中，当写寄存器时同步更新缓存，读寄存器时
-	直接返回缓存中的值。
+	由于WM8978的I2C两线接口不支持读取操作，因此寄存器值缓存在内存中，
+	当写寄存器时同步更新缓存，读寄存器时直接返回缓存中的值。
 	寄存器MAP 在WM8978(V4.5_2011).pdf 的第89页，寄存器地址是7bit， 寄存器数据是9bit
 */
 static uint16_t wm8978_RegCash[] = {
@@ -54,7 +56,6 @@ static uint16_t wm8978_RegCash[] = {
 	0x100, 0x002, 0x001, 0x001, 0x039, 0x039, 0x039, 0x039,
 	0x001, 0x001
 };
-
 /*****************************************************************
 *						           硬件I2C
 *****************************************************************/
@@ -235,7 +236,7 @@ uint8_t wm8978_Init(void)
 	I2C_GPIO_Config();
 	I2C_Mode_Configu();
 	res=wm8978_Reset();			/* 硬件复位WM8978所有寄存器到缺省状态 */
-	wm8978_CtrlGPIO1(1);
+//	wm8978_CtrlGPIO1(1);
 	return res;
 }
 
@@ -249,9 +250,9 @@ void wm8978_SetOUT1Volume(uint8_t _ucVolume)
 	uint16_t regL;
 	uint16_t regR;
 
-	if (_ucVolume > 0x3F)
+	if (_ucVolume > VOLUME_MAX)
 	{
-		_ucVolume = 0x3F;
+		_ucVolume = VOLUME_MAX;
 	}
 
 	regL = _ucVolume;
@@ -279,9 +280,9 @@ void wm8978_SetOUT2Volume(uint8_t _ucVolume)
 	uint16_t regL;
 	uint16_t regR;
 
-	if (_ucVolume > 0x3F)
+	if (_ucVolume > VOLUME_MAX)
 	{
-		_ucVolume = 0x3F;
+		_ucVolume = VOLUME_MAX;
 	}
 
 	regL = _ucVolume;
@@ -295,6 +296,7 @@ void wm8978_SetOUT2Volume(uint8_t _ucVolume)
 	wm8978_WriteReg(54, regL | 0x00);
 
 	/* 再同步更新左右声道的音量 */
+	
 	wm8978_WriteReg(55, regR | 0x100);	/* 在音量为0时再更新，避免调节音量出现的“嘎哒”声 */
 }
 
@@ -381,7 +383,7 @@ void wm8978_SetMicGain(uint8_t _ucGain)
 		_ucGain = GAIN_MAX;
 	}
 
-	/* PGA 音量控制  R45， R46   WM8978(V4.5_2011).pdf 25页
+	/* PGA 音量控制  R45， R46 
 		Bit8	INPPGAUPDATE
 		Bit7	INPPGAZCL		过零再更改
 		Bit6	INPPGAMUTEL		PGA静音
@@ -411,7 +413,7 @@ void wm8978_SetLineGain(uint8_t _ucGain)
 		Aux 输入信道的输入增益由 AUXL2BOOSTVO[2:0] 和 AUXR2BOOSTVO[2:0] 控制
 		Line 输入信道的增益由 LIP2BOOSTVOL[2:0] 和 RIP2BOOSTVOL[2:0] 控制
 	*/
-	/*	WM8978(V4.5_2011).pdf 29页，R47（左声道），R48（右声道）, MIC 增益控制寄存器
+	/*	R47（左声道），R48（右声道）, MIC 增益控制寄存器
 		R47 (R48定义与此相同)
 		B8		PGABOOSTL	= 1,   0表示MIC信号直通无增益，1表示MIC信号+20dB增益（通过自举电路）
 		B7		= 0， 保留
@@ -441,6 +443,7 @@ void wm8978_PowerDown(void)
 	wm8978_Reset();			/* 硬件复位WM8978所有寄存器到缺省状态 */
 }
 
+
 /**
 	* @brief  配置WM8978的音频接口(I2S)
 	* @param  _usStandard : 接口标准，I2S_Standard_Phillips, I2S_Standard_MSB 或 I2S_Standard_LSB
@@ -463,15 +466,15 @@ void wm8978_CfgAudioIF(uint16_t _usStandard, uint8_t _ucWordLen)
 		B0		MONO	= 0，0表示立体声，1表示单声道，仅左声道有效
 	*/
 	usReg = 0;
-	if (_usStandard == I2S_STANDARD_PHILIPS)	/* I2S飞利浦标准 */
+	if (_usStandard ==  ((uint16_t)0x0000))	/* I2S飞利浦标准 */
 	{
 		usReg |= (2 << 3);
 	}
-	else if (_usStandard == I2S_STANDARD_MSB)	/* MSB对齐标准(左对齐) */
+	else if (_usStandard == ((uint16_t)0x0010))	/* MSB对齐标准(左对齐) */
 	{
 		usReg |= (1 << 3);
 	}
-	else if (_usStandard == I2S_STANDARD_LSB)	/* LSB对齐标准(右对齐) */
+	else if (_usStandard == ((uint16_t)0x0020))	/* LSB对齐标准(右对齐) */
 	{
 		usReg |= (0 << 3);
 	}
@@ -493,7 +496,6 @@ void wm8978_CfgAudioIF(uint16_t _usStandard, uint8_t _ucWordLen)
 		usReg |= (0 << 5);		/* 16bit */
 	}
 	wm8978_WriteReg(4, usReg);
-
 
 	/*
 		R6，时钟产生控制寄存器
@@ -523,7 +525,6 @@ void wm8978_CfgAudioPath(uint16_t _InPath, uint16_t _OutPath)
 		return;
 	}
 
-	/* --------------------------- 第1步：根据输入通道参数配置寄存器 -----------------------*/
 	/*
 		R1 寄存器 Power manage 1
 		Bit8    BUFDCOPEN,  Output stage 1.5xAVDD/2 driver enable
@@ -827,7 +828,6 @@ void wm8978_CfgAudioPath(uint16_t _InPath, uint16_t _OutPath)
 		usReg |= (1 << 3);
 	}
 	wm8978_WriteReg(56, usReg);
-//	wm8978_WriteReg(56, (1 <<6));		/**/
 
 	/* R57 寄存器		OUT4 (MONO) mixer ctrl
 		B8:7	0
@@ -877,7 +877,6 @@ void wm8978_CfgAudioPath(uint16_t _InPath, uint16_t _OutPath)
 	{
 		wm8978_WriteReg(10, 0);
 	}
-	;
 }
 
 /**
@@ -961,7 +960,6 @@ uint8_t wm8978_Reset(void)
 	}
 	return res;
 }
-
 /**
 	*******************************************************************************************************
 	*	                     下面的代码是和STM32 I2S硬件相关的
@@ -1040,6 +1038,10 @@ void I2S_Stop(void)
 	WM8978_CLK_DISABLE();
 }
 
+const uint32_t I2SFreq[8] = {8000, 11025, 16000, 22050, 32000, 44100, 48000, 96000};
+const uint32_t I2SPLLN[8] = {256, 429, 213, 429, 426, 271, 258, 344};
+const uint32_t I2SPLLR[8] = {5, 4, 4, 4, 4, 6, 3, 1};
+
 /**
   * @brief  Clock Config.
   * @param  hsai: might be required to set audio peripheral predivider if any.
@@ -1050,36 +1052,36 @@ void I2S_Stop(void)
   */
 void BSP_AUDIO_OUT_ClockConfig(I2S_HandleTypeDef *hi2s, uint32_t AudioFreq, void *Params)
 {
-  RCC_PeriphCLKInitTypeDef RCC_ExCLKInitStruct;
+//  RCC_PeriphCLKInitTypeDef RCC_ExCLKInitStruct;
 
-  HAL_RCCEx_GetPeriphCLKConfig(&RCC_ExCLKInitStruct);
-  
-  /* Set the PLL configuration according to the audio frequency */
-  if((AudioFreq == I2S_AUDIOFREQ_11K) || (AudioFreq == I2S_AUDIOFREQ_22K) || (AudioFreq == I2S_AUDIOFREQ_44K))
-  {
-    /* Configure PLLSAI prescalers */
-    /* PLLI2S_VCO: VCO_429M 
-    SAI_CLK(first level) = PLLI2S_VCO/PLLI2SQ = 429/2 = 214.5 Mhz
-    SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 214.5/19 = 11.289 Mhz */ 
-    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI_PLLI2S;
-    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 429; 
-    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 2; 
-    RCC_ExCLKInitStruct.PLLI2SDivQ = 19; 
-    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);
-  }
-  else /* AUDIO_FREQUENCY_8K, AUDIO_FREQUENCY_16K, AUDIO_FREQUENCY_48K), AUDIO_FREQUENCY_96K */
-  {
-    /* SAI clock config 
-    PLLI2S_VCO: VCO_344M 
-    SAI_CLK(first level) = PLLI2S_VCO/PLLI2SQ = 344/7 = 49.142 Mhz 
-    SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 49.142/1 = 49.142 Mhz */  
-    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI_PLLI2S;
-    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 344;
-    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 7;
-    RCC_ExCLKInitStruct.PLLI2SDivQ = 1;
-    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);    
-  }
-  
+//  HAL_RCCEx_GetPeriphCLKConfig(&RCC_ExCLKInitStruct);
+//  
+////  /* Set the PLL configuration according to the audio frequency */
+////  if((AudioFreq == I2S_AUDIOFREQ_11K) || (AudioFreq == I2S_AUDIOFREQ_22K) || (AudioFreq == I2S_AUDIOFREQ_44K))
+////  {
+////    /* Configure PLLSAI prescalers */
+////    /* PLLI2S_VCO: VCO_429M 
+////    SAI_CLK(first level) = PLLI2S_VCO/PLLI2SQ = 429/2 = 214.5 Mhz
+////    SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 214.5/19 = 11.289 Mhz */ 
+////    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI_PLLI2S;
+////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 429; 
+////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 2; 
+////    RCC_ExCLKInitStruct.PLLI2SDivQ = 19; 
+////    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);
+////  }
+////  else /* AUDIO_FREQUENCY_8K, AUDIO_FREQUENCY_16K, AUDIO_FREQUENCY_48K), AUDIO_FREQUENCY_96K */
+////  {
+////    /* SAI clock config 
+////    PLLI2S_VCO: VCO_344M 
+////    SAI_CLK(first level) = PLLI2S_VCO/PLLI2SQ = 344/7 = 49.142 Mhz 
+////    SAI_CLK_x = SAI_CLK(first level)/PLLI2SDIVQ = 49.142/1 = 49.142 Mhz */  
+////    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_SAI_PLLI2S;
+////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 344;
+////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 7;
+////    RCC_ExCLKInitStruct.PLLI2SDivQ = 1;
+////    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);    
+////  }
+//  
 //  /* Set the PLL configuration according to the audio frequency */
 //  if((AudioFreq == I2S_AUDIOFREQ_11K) || (AudioFreq == I2S_AUDIOFREQ_22K) || (AudioFreq == I2S_AUDIOFREQ_44K))
 //  {
@@ -1090,10 +1092,10 @@ void BSP_AUDIO_OUT_ClockConfig(I2S_HandleTypeDef *hi2s, uint32_t AudioFreq, void
 //    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2S;
 ////    RCC_ExCLKInitStruct.Sai2ClockSelection = RCC_I2SCLKSOURCE_PLLI2S;
 ////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SP = 0;
-//    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 316;
-//		RCC_ExCLKInitStruct.PLLI2S.PLLI2SR = 7;
-//    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 4;
-//    RCC_ExCLKInitStruct.PLLI2SDivQ = 1;
+//    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 258;
+//		RCC_ExCLKInitStruct.PLLI2S.PLLI2SR = 3;
+////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 4;
+////    RCC_ExCLKInitStruct.PLLI2SDivQ = 1;
 //    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);
 //  }
 //  else /* AUDIO_FREQUENCY_8K, AUDIO_FREQUENCY_16K, AUDIO_FREQUENCY_48K), AUDIO_FREQUENCY_96K */
@@ -1105,12 +1107,42 @@ void BSP_AUDIO_OUT_ClockConfig(I2S_HandleTypeDef *hi2s, uint32_t AudioFreq, void
 //    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2S;
 ////    RCC_ExCLKInitStruct.Sai2ClockSelection = RCC_I2SCLKSOURCE_PLLI2S;
 ////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SP = 0;
-//    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 344;
-//		RCC_ExCLKInitStruct.PLLI2S.PLLI2SR = 7;
-//    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 1;
-//    RCC_ExCLKInitStruct.PLLI2SDivQ = 1;
+//    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 258;
+//		RCC_ExCLKInitStruct.PLLI2S.PLLI2SR = ;
+////    RCC_ExCLKInitStruct.PLLI2S.PLLI2SQ = 1;
+////    RCC_ExCLKInitStruct.PLLI2SDivQ = 1;
 //    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);
 //  }
+  RCC_PeriphCLKInitTypeDef RCC_ExCLKInitStruct;
+  uint8_t index = 0, freqindex = 0xFF;
+  
+  for(index = 0; index < 8; index++)
+  {
+    if(I2SFreq[index] == AudioFreq)
+    {
+      freqindex = index;
+    }
+  }
+  HAL_RCCEx_GetPeriphCLKConfig(&RCC_ExCLKInitStruct); 
+  if(freqindex != 0xFF)
+  {  /* I2S clock config 
+    PLLI2S_VCO = f(VCO clock) = f(PLLI2S clock input) ?(PLLI2SN/PLLM)
+    I2SCLK = f(PLLI2S clock output) = f(VCO clock) / PLLI2SR */
+    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2S;
+    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = I2SPLLN[freqindex];
+    RCC_ExCLKInitStruct.PLLI2S.PLLI2SR = I2SPLLR[freqindex];
+    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct);     
+  } 
+  else /* Default PLL I2S configuration */
+  {
+    /* I2S clock config 
+    PLLI2S_VCO = f(VCO clock) = f(PLLI2S clock input) ?(PLLI2SN/PLLM)
+    I2SCLK = f(PLLI2S clock output) = f(VCO clock) / PLLI2SR */
+    RCC_ExCLKInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2S;
+    RCC_ExCLKInitStruct.PLLI2S.PLLI2SN = 258;
+    RCC_ExCLKInitStruct.PLLI2S.PLLI2SR =  3;
+    HAL_RCCEx_PeriphCLKConfig(&RCC_ExCLKInitStruct); 
+  }
 }
 
 
@@ -1161,12 +1193,15 @@ void I2Sx_Mode_Config(const uint16_t _usStandard,const uint16_t _usWordLen,const
 	I2S_InitStructure.Init.CPOL = I2S_CPOL_LOW;
 	HAL_I2S_Init(&I2S_InitStructure);
 	
-	
 	/* 使能 SPI2/I2S2 外设 */
 //	I2S_Cmd(WM8978_I2Sx_SPI, ENABLE);
 //	__HAL_I2S_ENABLE_IT(&I2S_InitStructure,I2S_IT_TXE);
 	__HAL_I2S_ENABLE(&I2S_InitStructure);
 }
+
+
+void I2S_DMAError(DMA_HandleTypeDef *hdma);
+
 
 /**
 	* @brief  I2Sx TX DMA配置,设置为双缓冲模式,并开启DMA传输完成中断
@@ -1205,9 +1240,14 @@ void I2Sx_TX_DMA_Init(const uint32_t buffer0,const uint32_t buffer1,const uint32
   
 	__HAL_LINKDMA(&I2S_InitStructure,hdmatx,hdma_spi2_tx);
   
+  
+  	//执行回调函数,读取数据等操作在这里面处理	
+	hdma_spi2_tx.XferCpltCallback = I2S_DMAConvCplt;
+	hdma_spi2_tx.XferM1CpltCallback = I2S_DMAConvCplt;
+  hdma_spi2_tx.XferErrorCallback = I2S_DMAError;
+
 	HAL_DMAEx_MultiBufferStart_IT(&hdma_spi2_tx,(uint32_t)buffer0,(uint32_t)&(WM8978_I2Sx_SPI->DR),(uint32_t)buffer1,num);
 	
-
 	HAL_NVIC_SetPriority(I2Sx_TX_DMA_STREAM_IRQn,0,0);
 	HAL_NVIC_EnableIRQ(I2Sx_TX_DMA_STREAM_IRQn);
 }
@@ -1220,12 +1260,16 @@ void I2Sx_TX_DMA_Init(const uint32_t buffer0,const uint32_t buffer1,const uint32
 
 void I2Sx_TX_DMA_STREAM_IRQFUN(void)
 {  
-	//执行回调函数,读取数据等操作在这里面处理	
-	hdma_spi2_tx.XferCpltCallback = I2S_DMAConvCplt;
-	hdma_spi2_tx.XferM1CpltCallback = I2S_DMAConvCplt;
+//	//执行回调函数,读取数据等操作在这里面处理	
+//	hdma_spi2_tx.XferCpltCallback = I2S_DMAConvCplt;
+//	hdma_spi2_tx.XferM1CpltCallback = I2S_DMAConvCplt;
   HAL_DMA_IRQHandler(&hdma_spi2_tx);   	
 	
 } 
+void I2S_DMAError(DMA_HandleTypeDef *hdma)
+{
+  printf("传输失败\n");	
+}
 
 /* Private functions ---------------------------------------------------------*/
 /** @defgroup DCMI_Private_Functions DCMI Private Functions
@@ -1249,7 +1293,7 @@ void I2S_DMAConvCplt(DMA_HandleTypeDef *hdma)
 void I2S_Play_Start(void)
 {   	  
 //	DMA_Cmd(I2Sx_TX_DMA_STREAM,ENABLE);//开启DMA TX传输,开始播放
-			/* Enable Tx DMA Request */  
+//			/* Enable Tx DMA Request */  
     I2S_InitStructure.Instance->CR2 |= SPI_CR2_TXDMAEN;
 //	  __HAL_DMA_ENABLE(&hdma_spi2_tx); 
 

@@ -16,7 +16,7 @@
 */
 #include <stdio.h>
 #include <string.h>
-#include "bsp_debug_usart.h"
+#include "./usart/bsp_debug_usart.h"
 #include "bsp_SysTick.h"
 #include "bsp_wm8978.h"
 #include "ff.h" 
@@ -38,7 +38,7 @@
 static HMP3Decoder		Mp3Decoder;			/* mp3解码器指针	*/
 static MP3FrameInfo		Mp3FrameInfo;		/* mP3帧信息  */
 static MP3_TYPE mp3player;         /* mp3播放设备 */
-static uint8_t Isread=0;           /* DMA传输完成标志 */
+uint8_t Isread=0;           /* DMA传输完成标志 */
 static uint8_t bufflag=0;          /* 数据缓存区选择标志 */
 
 uint32_t led_delay=0;
