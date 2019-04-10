@@ -149,7 +149,7 @@ void bsp_485_IRQHandler(void)
 {
     if(uart_p<UART_BUFF_SIZE)
     {
-        if(__HAL_UART_GET_FLAG( &Uart2_Handle, UART_IT_RXNE ) != RESET)
+        if(__HAL_UART_GET_IT_SOURCE( &Uart2_Handle, UART_IT_RXNE ) != RESET)
         {
             HAL_UART_Receive(&Uart2_Handle, (uint8_t *)(&uart_buff[uart_p]),1 , 1000);
             uart_p++;
