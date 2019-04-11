@@ -8,7 +8,7 @@
   ******************************************************************************
   * @attention
   *
-  * 实验平台:野火 STM32 F407 开发板  
+  * 实验平台:野火 STM32 F429 开发板  
   * 论坛    :http://www.firebbs.cn
   * 淘宝    :http://firestm32.taobao.com
   *
@@ -32,7 +32,7 @@ void LED_GPIO_Config(void)
     LED1_GPIO_CLK_ENABLE();
     LED2_GPIO_CLK_ENABLE();
     LED3_GPIO_CLK_ENABLE();
-  
+
     /*选择要控制的GPIO引脚*/															   
     GPIO_InitStruct.Pin = LED1_PIN;	
 
@@ -58,6 +58,6 @@ void LED_GPIO_Config(void)
 
     /*关闭RGB灯*/
     LED_RGBOFF;
-
+		
 }
 /*********************************************END OF FILE**********************/

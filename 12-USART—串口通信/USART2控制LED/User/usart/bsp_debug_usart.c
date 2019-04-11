@@ -102,6 +102,7 @@ int fgetc(FILE *f)
 {
 		
 	int ch;
+  while (__HAL_UART_GET_FLAG(&UartHandle, UART_FLAG_RXNE) == RESET);
 	HAL_UART_Receive(&UartHandle, (uint8_t *)&ch, 1, 1000);	
 	return (ch);
 }
