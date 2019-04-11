@@ -12,10 +12,6 @@
 #define KEY2_PIN                  GPIO_PIN_13                 
 #define KEY2_GPIO_PORT            GPIOC                      
 #define KEY2_GPIO_CLK_ENABLE()    __GPIOC_CLK_ENABLE()
-
-#define KEY3_PIN                  GPIO_PIN_10                 
-#define KEY3_GPIO_PORT            GPIOI                      
-#define KEY3_GPIO_CLK_ENABLE()    __GPIOI_CLK_ENABLE()
 /*******************************************************/
 
  /** 按键按下标置宏

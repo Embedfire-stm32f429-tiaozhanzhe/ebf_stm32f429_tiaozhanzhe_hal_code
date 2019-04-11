@@ -18,7 +18,7 @@
 
   *
 
-  * 实验平台:LiteOS develop kit开发板 
+  * 实验平台:野火  STM32 F429 开发板 
 
   * 论坛    :http://www.firebbs.cn
 
@@ -81,17 +81,10 @@ void Key_GPIO_Config(void)
 
     GPIO_InitStructure.Pin = KEY2_PIN; 
 
+
     /*使用上面的结构体初始化按键*/
 
     HAL_GPIO_Init(KEY2_GPIO_PORT, &GPIO_InitStructure);
-    
-     /*选择按键的引脚*/
-
-    GPIO_InitStructure.Pin = KEY3_PIN; 
-
-    /*使用上面的结构体初始化按键*/
-
-    HAL_GPIO_Init(KEY3_GPIO_PORT, &GPIO_InitStructure);
 
  
 }

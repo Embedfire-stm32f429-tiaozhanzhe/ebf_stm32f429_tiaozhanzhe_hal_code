@@ -20,6 +20,7 @@
 #include "wm8978/bsp_wm8978.h"
 #include "ff.h" 
 #include "recorder/Recorder.h"
+#include "./TouchPad/bsp_touchpad.h"
 
 /* 录音文件存放路径 */
 #define RECORDERDIR	"0:/recorder"
@@ -73,7 +74,7 @@ void RecorderDemo(void)
 	Recorder.ucStatus=STA_IDLE;    /* 开始设置为空闲状态  */
 	Recorder.ucInput=0;            /* 缺省MIC输入  */
 	Recorder.ucFmtIdx=3;           /* 缺省飞利浦I2S标准，16bit数据长度，44K采样率  */
-	Recorder.ucVolume=35;          /* 缺省耳机音量  */
+	Recorder.ucVolume=40;          /* 缺省耳机音量  */
 	if(Recorder.ucInput==0) //MIC 
 	{
 		Recorder.ucGain=50;          /* 缺省MIC增益  */
@@ -158,7 +159,7 @@ void RecorderDemo(void)
 				ucRefresh = 1;
 			}
 			/*  KEY3开始回放录音  */
-			if(Key_Scan(KEY3_GPIO_PORT,KEY3_PIN)==KEY_ON)
+			if(TPAD_Scan(0)==1)
 			{			
 				/* 开始回放 */
 				StartPlay(recfilename);

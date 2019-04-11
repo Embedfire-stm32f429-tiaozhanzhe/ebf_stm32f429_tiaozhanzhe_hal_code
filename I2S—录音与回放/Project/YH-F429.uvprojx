@@ -792,6 +792,11 @@
               <FileType>1</FileType>
               <FilePath>..\User\sdio\fatfs_sd_sdio.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_touchpad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\TouchPad\bsp_touchpad.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
