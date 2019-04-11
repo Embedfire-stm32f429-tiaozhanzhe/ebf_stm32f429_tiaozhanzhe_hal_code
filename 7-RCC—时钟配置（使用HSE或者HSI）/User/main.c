@@ -31,13 +31,13 @@ void Delay(__IO uint32_t nCount);
 int main(void)
 {
 
-    // 程序来到main函数之前，启动文件：statup_stm32f746xx.s已经调用
+    // 程序来到main函数之前，启动文件：statup_stm32f429xx.s已经调用
     // SystemInit()函数把系统时钟初始化成16MHZ
-    // SystemInit()在system_stm32f7xx.c中定义
+    // SystemInit()在system_stm32f4xx.c中定义
     // 如果用户想修改系统时钟，可自行编写程序修改	
     // 重新设置系统时钟，这时候可以选择使用HSE还是HSI
   
-    //系统时钟设置为216M，最高是250M
+    //系统时钟设置为180M，最高是250M
     HSE_SetSysClock(25, 360, 2, 7);
         
     // 使用HSI，配置系统时钟为216M
