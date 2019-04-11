@@ -8,7 +8,7 @@
   ******************************************************************************
   * @attention
   *
-  * 实验平台:野火 LiteOS develop kit 开发板 
+  * 实验平台:野火 STM32 F429 开发板 
   * 论坛    :http://www.firebbs.cn
   * 淘宝    :http://firestm32.taobao.com
   *
@@ -41,9 +41,9 @@
 #include "ff.h"
 #include "ff_gen_drv.h"
 #include "sd_diskio.h"
-#include "recorder/Recorder.h"
 #include "bsp_wm8978.h"
 #include "bsp_SysTick.h"
+#include "mp3Player.h"
 /**
   ******************************************************************************
   *                              定义变量
@@ -62,6 +62,33 @@ extern FATFS flash_fs;
 extern Diskio_drvTypeDef  SD_Driver;
 
 /**
+	**************************************************************
+	* Description : 初始化WiFi模块使能引脚，并禁用WiFi模块
+	* Argument(s) : none.
+	* Return(s)   : none.
+	**************************************************************
+	*/
+static void WIFI_PDN_INIT(void)
+{
+	/*定义一个GPIO_InitTypeDef类型的结构体*/
+	GPIO_InitTypeDef GPIO_InitStruct;
+	/*使能引脚时钟*/	
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	/*选择要控制的GPIO引脚*/															   
+	GPIO_InitStruct.Pin = GPIO_PIN_13;	
+	/*设置引脚的输出类型为推挽输出*/
+	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;      
+	/*设置引脚为上拉模式*/
+	GPIO_InitStruct.Pull  = GPIO_PULLUP;
+	/*设置引脚速率为高速 */   
+	GPIO_InitStruct.Speed = GPIO_SPEED_FAST; 
+	/*调用库函数，使用上面配置的GPIO_InitStructure初始化GPIO*/
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);	
+	/*禁用WiFi模块*/
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_13,GPIO_PIN_RESET);  
+}
+
+/**
   * @brief  主函数
   * @param  无
   * @retval 无
@@ -74,6 +101,9 @@ int main(void)
   SystemClock_Config();
 
   SysTick_Init();
+  
+  /* 禁用 WiFi */
+  WIFI_PDN_INIT();
   
   /*初始化USART1*/
   DEBUG_USART_Config();
@@ -105,8 +135,7 @@ int main(void)
   
   while(1)
   {
-    /* 录音与回放功能 */
-    RecorderDemo();
+    mp3PlayerDemo("0:/mp3/刘明湘-漂洋过海来看你(中国好声音第三季).mp3"); 
   }
 }
 

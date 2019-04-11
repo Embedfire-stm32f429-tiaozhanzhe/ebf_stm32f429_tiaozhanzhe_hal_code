@@ -8,7 +8,7 @@
 ******************************************************************************
 * @attention
 *
-* 实验平台:野火 LiteOS develop kit开发板  
+* 实验平台:野火 STM32 F429 开发板  
 * 论坛    :http://www.chuxue123.com
 * 淘宝    :http://firestm32.taobao.com
 *
@@ -16,7 +16,7 @@
 */
 #include "bsp_wm8978.h"  
 #include "./usart/bsp_debug_usart.h"
-#include "recorder/Recorder.h"
+#include "mp3Player.h"
 #include "main.h"
 
 
@@ -1160,7 +1160,7 @@ void I2S_DMAError(DMA_HandleTypeDef *hdma)
   */
 void I2S_DMAConvCplt(DMA_HandleTypeDef *hdma)
 {
-  MusicPlayer_I2S_DMA_TX_Callback();
+  MP3Player_I2S_DMA_TX_Callback();
 }
 /**
 	* @brief  I2S开始播放
@@ -1312,7 +1312,7 @@ void I2Sxext_Recorde_Stop(void)
 
 void I2Sxext_DMAConvCplt(DMA_HandleTypeDef *hdma)
 {
-	Recorder_I2S_DMA_RX_Callback();
+//	Recorder_I2S_DMA_RX_Callback();
 }
 
 /***************************** (END OF FILE) *********************************/

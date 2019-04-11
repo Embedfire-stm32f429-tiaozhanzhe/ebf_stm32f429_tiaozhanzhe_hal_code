@@ -54,7 +54,7 @@
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath>..\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -768,11 +768,6 @@
               <FilePath>..\User\key\bsp_key.c</FilePath>
             </File>
             <File>
-              <FileName>Recorder.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\recorder\Recorder.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_sdio_sd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\sdio\bsp_sdio_sd.c</FilePath>
@@ -791,6 +786,11 @@
               <FileName>fatfs_sd_sdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\User\sdio\fatfs_sd_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>mp3Player.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\mp3Player.c</FilePath>
             </File>
           </Files>
         </Group>
