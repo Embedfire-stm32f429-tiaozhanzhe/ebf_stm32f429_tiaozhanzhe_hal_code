@@ -143,11 +143,12 @@ static void I2C_Mode_Configu(void)
   */
 static uint8_t WM8978_I2C_WriteRegister(uint8_t RegisterAddr, uint16_t RegisterValue)
 {	
-  uint16_t tmp;
+  uint8_t tmp[2];
   
-	tmp  = (RegisterValue&0xff) << 8;
-	tmp |= ((RegisterAddr << 1) & 0xFE) | ((RegisterValue >> 8) & 0x1);
- 	HAL_I2C_Master_Transmit(&I2C_InitStructure,WM8978_SLAVE_ADDRESS,(uint8_t *)&tmp,2,WM8978_I2C_FLAG_TIMEOUT); 
+	tmp[0] = ((RegisterAddr << 1) & 0xFE) | ((RegisterValue >> 8) & 0x1);
+  tmp[1] = RegisterValue & 0xFF;
+  
+  HAL_I2C_Master_Transmit(&I2C_InitStructure, WM8978_SLAVE_ADDRESS, tmp, 2, WM8978_I2C_FLAG_TIMEOUT); 
 //  I2Cx_WriteMultiple(&I2C_InitStructure,WM8978_SLAVE_ADDRESS,RegisterAddr, I2C_MEMADD_SIZE_16BIT,(uint8_t*)&RegisterValue, 2);  
 //  /* Start the config sequence */
 //  I2C_GenerateSTART(WM8978_I2C, ENABLE);

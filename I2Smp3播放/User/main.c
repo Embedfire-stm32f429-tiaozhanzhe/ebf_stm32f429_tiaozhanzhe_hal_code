@@ -66,25 +66,25 @@ extern Diskio_drvTypeDef  SD_Driver;
 	* Return(s)   : none.
 	**************************************************************
 	*/
-//static void WIFI_PDN_INIT(void)
-//{
-//	/*定义一个GPIO_InitTypeDef类型的结构体*/
-//	GPIO_InitTypeDef GPIO_InitStruct;
-//	/*使能引脚时钟*/	
-//	__HAL_RCC_GPIOG_CLK_ENABLE();
-//	/*选择要控制的GPIO引脚*/															   
-//	GPIO_InitStruct.Pin = GPIO_PIN_9;	
-//	/*设置引脚的输出类型为推挽输出*/
-//	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;      
-//	/*设置引脚为上拉模式*/
-//	GPIO_InitStruct.Pull  = GPIO_PULLUP;
-//	/*设置引脚速率为高速 */   
-//	GPIO_InitStruct.Speed = GPIO_SPEED_FAST; 
-//	/*调用库函数，使用上面配置的GPIO_InitStructure初始化GPIO*/
-//	HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);	
-//	/*禁用WiFi模块*/
-//	HAL_GPIO_WritePin(GPIOG,GPIO_PIN_9,GPIO_PIN_RESET);  
-//}
+static void WIFI_PDN_INIT(void)
+{
+	/*定义一个GPIO_InitTypeDef类型的结构体*/
+	GPIO_InitTypeDef GPIO_InitStruct;
+	/*使能引脚时钟*/	
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	/*选择要控制的GPIO引脚*/															   
+	GPIO_InitStruct.Pin = GPIO_PIN_13;	
+	/*设置引脚的输出类型为推挽输出*/
+	GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;      
+	/*设置引脚为上拉模式*/
+	GPIO_InitStruct.Pull  = GPIO_PULLUP;
+	/*设置引脚速率为高速 */   
+	GPIO_InitStruct.Speed = GPIO_SPEED_FAST; 
+	/*调用库函数，使用上面配置的GPIO_InitStructure初始化GPIO*/
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);	
+	/*禁用WiFi模块*/
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_13,GPIO_PIN_RESET);  
+}
 
 /**
   * @brief  主函数
@@ -97,8 +97,8 @@ int main(void)
   
   /* 配置系统时钟为168 MHz */
   SystemClock_Config();
-//	/*禁用WiFi模块*/
-//	WIFI_PDN_INIT();
+	/*禁用WiFi模块*/
+	WIFI_PDN_INIT();
 
   /*初始化USART1*/
   DEBUG_USART_Config();
@@ -128,7 +128,7 @@ int main(void)
 	}
 	printf("初始化WM8978成功\n");	
 
-  mp3PlayerDemo("0:/mp3/张国荣-玻璃之情.mp3");   
+  mp3PlayerDemo("0:/mp3/刘明湘-漂洋过海来看你(中国好声音第三季).mp3");   
 }
 
 
