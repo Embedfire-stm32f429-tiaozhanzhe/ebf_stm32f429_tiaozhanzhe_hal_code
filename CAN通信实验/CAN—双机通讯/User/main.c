@@ -40,8 +40,8 @@ int main(void)
     /*初始化can,在中断接收CAN数据包*/
     CAN_Config();
 
-    printf("\r\n 欢迎使用秉火  STM32 F767 开发板。\r\n");
-    printf("\r\n 秉火F767 CAN通讯实验例程\r\n");
+    printf("\r\n 欢迎使用秉火  STM32 F429 开发板。\r\n");
+    printf("\r\n 秉火F429 CAN通讯实验例程\r\n");
 	
 	printf("\r\n 实验步骤：\r\n");
 
@@ -61,7 +61,12 @@ int main(void)
 			/* 开始发送数据 */
 			HAL_CAN_Transmit_IT(&Can_Handle);
 			HAL_Delay(100);
-			LED_RGBOFF;			
+			LED_RGBOFF;		
+
+      printf("\r\n已使用CAN发送数据包！\r\n"); 			
+			printf("\r\n发送的报文内容为：\r\n");
+//			printf("\r\n 扩展ID号ExtId：0x%x \r\n",Can_Handle.ExtId);
+			CAN_DEBUG_ARRAY(Can_Handle.pTxMsg->Data,8);     
 		}
 		if(flag==1)
 		{				

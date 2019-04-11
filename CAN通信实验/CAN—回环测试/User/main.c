@@ -40,7 +40,7 @@ int main(void)
     /*初始化can,在中断接收CAN数据包*/
     CAN_Config();
 
-    printf("\r\n 欢迎使用秉火  STM32 F767 开发板。\r\n");
+    printf("\r\n 欢迎使用秉火  STM32 F429 开发板。\r\n");
     printf("\r\n 秉火F767 CAN通讯实验例程\r\n");
 	
 	printf("\r\n 实验步骤：\r\n");
