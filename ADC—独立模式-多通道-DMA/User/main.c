@@ -49,16 +49,16 @@ int main(void)
     Rheostat_Init();
     while (1)
     {
-		ADC_ConvertedValueLocal[0] =(float) ADC_ConvertedValue[0]/4096*(float)3.3;
-		ADC_ConvertedValueLocal[1] =(float) ADC_ConvertedValue[1]/4096*(float)3.3;
-		ADC_ConvertedValueLocal[2] =(float) ADC_ConvertedValue[2]/4096*(float)3.3;
-		
-		printf("\r\n CH1_PC3 value = %f V \r\n",ADC_ConvertedValueLocal[0]);
-		printf("\r\n CH2_PA4 value = %f V \r\n",ADC_ConvertedValueLocal[1]);
-		printf("\r\n CH3_PA6 value = %f V \r\n",ADC_ConvertedValueLocal[2]);
-		
-		printf("\r\n\r\n");
-		Delay(0xffffff);  
+      ADC_ConvertedValueLocal[0] =(float) ADC_ConvertedValue[0]/4096*(float)3.3;
+      ADC_ConvertedValueLocal[1] =(float) ADC_ConvertedValue[1]/4096*(float)3.3;
+      ADC_ConvertedValueLocal[2] =(float) ADC_ConvertedValue[2]/4096*(float)3.3;
+      
+      printf("\r\n CH1_PC3 value = %f V \r\n",ADC_ConvertedValueLocal[0]);
+      printf("\r\n CH2_PA4 value = %f V \r\n",ADC_ConvertedValueLocal[1]);
+      printf("\r\n CH3_PA6 value = %f V \r\n",ADC_ConvertedValueLocal[2]);
+      
+      printf("\r\n\r\n");
+      Delay(0xffffff);  
     }   
 }
 

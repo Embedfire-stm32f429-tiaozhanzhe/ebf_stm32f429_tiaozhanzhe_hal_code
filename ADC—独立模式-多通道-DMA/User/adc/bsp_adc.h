@@ -13,7 +13,7 @@
 #define RHEOSTAT_ADC_GPIO_CLK1_ENABLE()     __GPIOC_CLK_ENABLE()
 #define RHEOSTAT_ADC_CHANNEL1               ADC_CHANNEL_13
 /*=====================通道2 IO ======================*/
-// PA4 通过调帽接光敏电阻
+// PA4 悬空，可用杜邦线接3V3或者GND来实验
 // ADC IO宏定义
 #define RHEOSTAT_ADC_GPIO_PORT2             GPIOA
 #define RHEOSTAT_ADC_GPIO_PIN2              GPIO_PIN_4
