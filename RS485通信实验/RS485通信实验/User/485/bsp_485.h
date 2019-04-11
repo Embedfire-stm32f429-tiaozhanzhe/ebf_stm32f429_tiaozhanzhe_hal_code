@@ -24,11 +24,11 @@
 #define _485_USART_TX_AF                       GPIO_AF7_USART2
 
 
-#define _485_RE_GPIO_PORT					   GPIOD
-#define _485_RE_GPIO_CLK_ENABLE()              __GPIOD_CLK_ENABLE()
-#define _485_RE_PIN							   GPIO_PIN_11
+#define _485_RE_GPIO_PORT					             GPIOB
+#define _485_RE_GPIO_CLK_ENABLE()              __GPIOB_CLK_ENABLE()
+#define _485_RE_PIN							               GPIO_PIN_8
 
-#define _485_INT_IRQ                 		   USART2_IRQn
+#define _485_INT_IRQ                 		       USART2_IRQn
 #define bsp_485_IRQHandler                     USART2_IRQHandler
 
 
