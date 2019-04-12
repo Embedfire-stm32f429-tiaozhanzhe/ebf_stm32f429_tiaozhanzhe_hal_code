@@ -99,9 +99,9 @@ typedef enum
 #define DCMI_PWDN_GPIO_PIN         	        GPIO_PIN_3
 
 //RST
-#define DCMI_RST_GPIO_PORT        	        GPIOG
-#define DCMI_RST_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOG_CLK_ENABLE()
-#define DCMI_RST_GPIO_PIN         	        GPIO_PIN_2
+#define DCMI_RST_GPIO_PORT        	        GPIOB
+#define DCMI_RST_GPIO_CLK_ENABLE()          __HAL_RCC_GPIOB_CLK_ENABLE()
+#define DCMI_RST_GPIO_PIN         	        GPIO_PIN_5
 
 //数据信号线
 #define DCMI_D0_GPIO_PORT        	        GPIOH
