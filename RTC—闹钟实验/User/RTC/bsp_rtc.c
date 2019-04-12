@@ -206,13 +206,9 @@ void RTC_CLK_Config(void)
 void RTC_AlarmSet(void)
 {
     RTC_AlarmTypeDef  RTC_AlarmStructure;
-
-    /* RTC 闹钟中断配置 */
-    /* EXTI 配置 */
-    HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
-    /* 使能RTC闹钟中断 */
-    HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
-
+  
+    
+  
     /* 设置闹钟时间 */
     RTC_AlarmStructure.Alarm = RTC_Alarm_X;
     RTC_AlarmStructure.AlarmTime.TimeFormat     = RTC_H12_AMorPM;
@@ -223,7 +219,13 @@ void RTC_AlarmSet(void)
     RTC_AlarmStructure.AlarmDateWeekDaySel = ALARM_DATE_WEEKDAY_SEL;
     RTC_AlarmStructure.AlarmDateWeekDay = ALARM_DATE_WEEKDAY;  
 
-    HAL_RTC_SetAlarm_IT(&Rtc_Handle,&RTC_AlarmStructure, RTC_FORMAT_BCD); 
+    HAL_RTC_SetAlarm_IT(&Rtc_Handle,&RTC_AlarmStructure, RTC_Format_BINorBCD); 
+  
+    /* RTC 闹钟中断配置 */
+    /* EXTI 配置 */
+    HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
+    /* 使能RTC闹钟中断 */
+    HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
 }
 
 /**

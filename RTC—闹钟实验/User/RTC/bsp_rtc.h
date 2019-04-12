@@ -29,11 +29,11 @@ extern RTC_HandleTypeDef Rtc_Handle;
 // 闹钟相关宏定义
 #define ALARM_HOURS               1          // 0~23
 #define ALARM_MINUTES             1          // 0~59
-#define ALARM_SECONDS             10          // 0~59
+#define ALARM_SECONDS             30          // 0~59
 
 #define ALARM_MASK                RTC_ALARMMASK_DATEWEEKDAY
 #define ALARM_DATE_WEEKDAY_SEL    RTC_ALARMDATEWEEKDAYSEL_DATE
-#define ALARM_DATE_WEEKDAY        2
+#define ALARM_DATE_WEEKDAY        1
 #define RTC_Alarm_X               RTC_ALARM_A
 
 // 时间格式宏定义
