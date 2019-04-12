@@ -312,6 +312,16 @@ static void read_from_mpl(void)
 				/*获取欧拉角*/
 			  if (inv_get_sensor_type_euler(data, &accuracy,(inv_time_t*)&timestamp))
 						{
+              		float Pitch,Roll,Yaw;
+                  //inv_get_sensor_type_euler读出的数据是Q16格式，所以左移16位.
+                  Pitch =data[0]*1.0/(1<<16) ;
+                  Roll = data[1]*1.0/(1<<16);
+                  Yaw = data[2]*1.0/(1<<16);
+                  
+                  /*向匿名上位机发送姿态*/
+                  Data_Send_Status(Pitch,Roll,Yaw);
+                  /*向匿名上位机发送原始数据*/
+                  Send_Data((int16_t *)&sensors.gyro.raw,(int16_t *)&sensors.accel.raw);
 																		
 						#ifdef USE_LCD_DISPLAY
 									sprintf ( cStr, "Pitch :  %.4f  ", data[0]*1.0/(1<<16) );	//inv_get_sensor_type_euler读出的数据是Q16格式，所以左移16位.
