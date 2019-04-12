@@ -31,7 +31,7 @@ static uint8_t KEY2_LongPress(void);
   */
 int main(void) 
 {
-	/* 初始化系统时钟为216MHz */
+	/* 初始化系统时钟为180MHz */
 	SystemClock_Config();
 	/* 初始化LED */
 	LED_GPIO_Config();	
@@ -40,8 +40,8 @@ int main(void)
 	/*初始化按键，不需要中断,仅初始化KEY2即可，只用于唤醒的PA0引脚不需要这样初始化*/
 	Key_GPIO_Config(); 
 	
-	printf("\r\n 欢迎使用秉火  STM32 F767 开发板。\r\n");
-	printf("\r\n 秉火F767 待机模式例程\r\n");
+	printf("\r\n 欢迎使用秉火  STM32 F429 开发板。\r\n");
+	printf("\r\n 秉火 F429 待机模式例程\r\n");
 	
 	printf("\r\n 实验说明：\r\n");
 
