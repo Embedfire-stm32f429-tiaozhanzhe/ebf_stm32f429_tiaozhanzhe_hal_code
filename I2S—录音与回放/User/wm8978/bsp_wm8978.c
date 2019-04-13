@@ -1106,7 +1106,6 @@ void I2Sx_TX_DMA_Init(const uint32_t buffer0,const uint32_t buffer1,const uint32
 	hdma_spi2_tx.Instance =I2Sx_TX_DMA_STREAM;
   hdma_spi2_tx.Init.Channel = I2Sx_TX_DMA_CHANNEL;  //通道0 SPIx_TX通道 
   hdma_spi2_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;//存储器到外设模式
-//  DMA_InitStructure.Init.BufferSize = num;//数据传输量 
   hdma_spi2_tx.Init.PeriphInc = DMA_PINC_DISABLE;//外设非增量模式
   hdma_spi2_tx.Init.MemInc = DMA_MINC_ENABLE;//存储器增量模式
   hdma_spi2_tx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;//外设数据长度:16位
@@ -1121,7 +1120,7 @@ void I2Sx_TX_DMA_Init(const uint32_t buffer0,const uint32_t buffer1,const uint32
 	__HAL_LINKDMA(&I2S_InitStructure,hdmatx,hdma_spi2_tx);
   
   
-  	//执行回调函数,读取数据等操作在这里面处理	
+  	//注册回调函数,读取数据等操作在这里面处理	
 	hdma_spi2_tx.XferCpltCallback = I2S_DMAConvCplt;
 	hdma_spi2_tx.XferM1CpltCallback = I2S_DMAConvCplt;
   hdma_spi2_tx.XferErrorCallback = I2S_DMAError;
@@ -1200,7 +1199,6 @@ void I2Sxext_Mode_Config(const uint16_t _usStandard, const uint16_t _usWordLen,c
   
 	/* 复位 SPI2 外设到缺省状态 */
 	HAL_I2S_DeInit(&I2Sext_InitStructure);
-//  __HAL_I2S_DISABLE(&I2Sext_InitStructure);
 
 	/* I2S2 外设配置 */
 	I2Sext_InitStructure.Instance = WM8978_I2Sx_ext;
@@ -1212,7 +1210,6 @@ void I2Sxext_Mode_Config(const uint16_t _usStandard, const uint16_t _usWordLen,c
 	I2Sext_InitStructure.Init.MCLKOutput = I2S_MCLKOUTPUT_ENABLE;	/* 主时钟模式 */
 	I2Sext_InitStructure.Init.AudioFreq = _usAudioFreq;			/* 音频采样频率 */
 	I2Sext_InitStructure.Init.CPOL = I2S_CPOL_LOW;
-//	HAL_I2S_Init(&I2S_InitStructure);
 
   if(HAL_I2S_Init(&I2Sext_InitStructure) != HAL_OK)
   {
@@ -1221,10 +1218,7 @@ void I2Sxext_Mode_Config(const uint16_t _usStandard, const uint16_t _usWordLen,c
 	/* 使能 SPI2/I2S2 外设 */
 	__HAL_I2S_ENABLE(&I2Sext_InitStructure);
   
- /* Enable I2Sext(receiver) before enabling I2Sx peripheral */
-  __HAL_I2SEXT_ENABLE(&I2Sext_InitStructure);
-
-  /* Enable I2S peripheral after the I2Sext */
+  /* Enable I2S peripheral after the I2S */
   __HAL_I2S_ENABLE(&I2S_InitStructure);
 }
 
@@ -1254,7 +1248,6 @@ void I2Sxext_RX_DMA_Init(const uint16_t *buffer0,const uint16_t *buffer1,const u
 	hdma_spi2_rx.Instance =I2Sxext_RX_DMA_STREAM;
   hdma_spi2_rx.Init.Channel = I2Sxext_RX_DMA_CHANNEL;  //通道0 SPIx_RX通道 
   hdma_spi2_rx.Init.Direction = DMA_PERIPH_TO_MEMORY;//外设模式到存储器
-//  DMA_InitStructure.Init.BufferSize = num;//数据传输量 
   hdma_spi2_rx.Init.PeriphInc = DMA_PINC_DISABLE;//外设非增量模式
   hdma_spi2_rx.Init.MemInc = DMA_MINC_ENABLE;//存储器增量模式
   hdma_spi2_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;//外设数据长度:16位
@@ -1268,14 +1261,11 @@ void I2Sxext_RX_DMA_Init(const uint16_t *buffer0,const uint16_t *buffer1,const u
   	//执行回调函数,读取数据等操作在这里面处理	
 	hdma_spi2_rx.XferCpltCallback = I2Sxext_DMAConvCplt;       // DMA 传输完回调
 	hdma_spi2_rx.XferM1CpltCallback = I2Sxext_DMAConvCplt;     // DMA传输完成内存1回调
-//  hdma_spi2_rx.XferHalfCpltCallback = I2Sxext_DMAConvCplt;
   hdma_spi2_rx.XferErrorCallback = I2S_DMAError2;         // DMA传输错误回调
   
   __HAL_LINKDMA(&I2Sext_InitStructure,hdmarx,hdma_spi2_rx);
   HAL_DMAEx_MultiBufferStart_IT(&hdma_spi2_rx,(uint32_t)&(WM8978_I2Sx_ext->DR),(uint32_t)buffer0,(uint32_t)buffer1,num);
   
-	
-
 	HAL_NVIC_SetPriority(I2Sxext_RX_DMA_STREAM_IRQn,0,0);
 	HAL_NVIC_EnableIRQ(I2Sxext_RX_DMA_STREAM_IRQn);
 }
