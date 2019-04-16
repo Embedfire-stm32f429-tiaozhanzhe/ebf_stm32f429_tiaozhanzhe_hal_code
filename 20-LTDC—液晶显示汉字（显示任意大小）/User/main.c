@@ -10,7 +10,7 @@
   *
   * 实验平台:野火 STM32 F429 开发板 
   * 论坛    :http://www.firebbs.cn
-  * 淘宝    :http://firestm32.taobao.com
+  * 淘宝    :http://fire-stm32.taobao.com
   *
   ******************************************************************************
   */
@@ -97,10 +97,10 @@ void LCD_Test(void)
 	/*选择字体*/
 	LCD_SetFont(&LCD_DEFAULT_FONT);
 
-	LCD_DisplayStringLineEx(0,5,16,16,(uint8_t* )"秉火F429 16*16 ",0);
-    LCD_DisplayStringLine_EN_CH(1,(uint8_t* )"秉火F429 24*24 ");
-    LCD_DisplayStringLineEx(0,50,32,32,(uint8_t* )"秉火F429 32*32 ",0);
-    LCD_DisplayStringLineEx(0,82,48,48,(uint8_t* )"秉火F429 48*48 ",0);
+	LCD_DisplayStringLineEx(0,5,16,16,(uint8_t* )"野火F429 16*16 ",0);
+    LCD_DisplayStringLine_EN_CH(1,(uint8_t* )"野火F429 24*24 ");
+    LCD_DisplayStringLineEx(0,50,32,32,(uint8_t* )"野火F429 32*32 ",0);
+    LCD_DisplayStringLineEx(0,82,48,48,(uint8_t* )"野火F429 48*48 ",0);
 
     /*使用c标准库把变量转化成字符串*/
     sprintf(dispBuff,"显示变量例子: testCount = %d ",testCNT);

@@ -10,7 +10,7 @@
   *
   * 实验平台:野火 STM32 F429 开发板 
   * 论坛    :http://www.firebbs.cn
-  * 淘宝    :http://firestm32.taobao.com
+  * 淘宝    :http://fire-stm32.taobao.com
   *
   ******************************************************************************
   */
@@ -36,7 +36,7 @@ typedef enum { FAILED = 0, PASSED = !FAILED} TestStatus;
 
    
 /* 发送缓冲区初始化 */
-uint8_t Tx_Buffer[] = "感谢您选用秉火stm32开发板\r\nhttp://firestm32.taobao.com";
+uint8_t Tx_Buffer[] = "感谢您选用野火stm32开发板\r\nhttp://fire-stm32.taobao.com";
 uint8_t Rx_Buffer[BufferSize];
 
 //读取的ID存储位置

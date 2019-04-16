@@ -22,7 +22,7 @@
 
   * ¬€Ã≥    :http://www.firebbs.cn
 
-  * Ã‘±¶    :http://firestm32.taobao.com
+  * Ã‘±¶    :http://fire-stm32.taobao.com
 
   *
 
