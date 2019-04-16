@@ -29,9 +29,9 @@
 #define GTP_I2C_SDA_AF                   GPIO_AF4_I2C2
 
 /*复位引脚*/
-#define GTP_RST_GPIO_PORT                GPIOD
-#define GTP_RST_GPIO_CLK_ENABLE()        __HAL_RCC_GPIOD_CLK_ENABLE()
-#define GTP_RST_GPIO_PIN                 GPIO_PIN_11
+#define GTP_RST_GPIO_PORT                GPIOI
+#define GTP_RST_GPIO_CLK_ENABLE()        __HAL_RCC_GPIOI_CLK_ENABLE()
+#define GTP_RST_GPIO_PIN                 GPIO_PIN_8
 /*中断引脚*/
 #define GTP_INT_GPIO_PORT                GPIOD
 #define GTP_INT_GPIO_CLK_ENABLE()        __HAL_RCC_GPIOD_CLK_ENABLE()
@@ -52,8 +52,8 @@
 
 //函数接口
 void I2C_Touch_Init(void);
-uint32_t I2C_WriteBytes(uint8_t ClientAddr,uint8_t* pBuffer,  uint8_t NumByteToWrite);
 uint32_t I2C_ReadBytes(uint8_t ClientAddr,uint8_t* pBuffer, uint16_t NumByteToRead);
+uint32_t I2C_WriteBytes(uint8_t ClientAddr,uint8_t* pBuffer,  uint8_t NumByteToWrite);
 void I2C_ResetChip(void);
 void I2C_GTP_IRQDisable(void);
 void I2C_GTP_IRQEnable(void);

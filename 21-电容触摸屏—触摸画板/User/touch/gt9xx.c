@@ -8,9 +8,9 @@
   ******************************************************************************
   * @attention
   *
-  * 实验平台:秉火  STM32 F767 开发板 
+  * 实验平台:野火 STM32F429 开发板 
   * 论坛    :http://www.firebbs.cn
-  * 淘宝    :http://firestm32.taobao.com
+  * 淘宝    :https://fire-stm32.taobao.com
   *
   ******************************************************************************
   */ 
@@ -46,32 +46,83 @@ uint8_t CTP_CFG_GT9157[] ={
 
 // 7寸屏GT911驱动配置
 uint8_t CTP_CFG_GT911[] =  {
-  0x00,0x20,0x03,0xE0,0x01,0x05,0x3D,0x00,0x01,0x48,
-  0x28,0x0D,0x50,0x32,0x03,0x05,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x18,0x1A,0x1E,0x14,0x8A,0x2A,0x0C,
-  0x30,0x38,0x31,0x0D,0x00,0x00,0x02,0xB9,0x03,0x2D,
+  0x00,0x20,0x03,0xE0,0x01,0x05,0x0D,0x00,0x01,0x08,
+  0x28,0x0F,0x50,0x32,0x03,0x05,0x00,0x00,0x00,0x00,
+  0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x8A,0x2A,0x0C,
+  0x45,0x47,0x0C,0x08,0x00,0x00,0x00,0x02,0x02,0x2D,
   0x00,0x00,0x00,0x00,0x00,0x03,0x64,0x32,0x00,0x00,
-  0x00,0x1D,0x41,0x94,0xC5,0x02,0x07,0x00,0x00,0x04,
-  0xA5,0x1F,0x00,0x94,0x25,0x00,0x88,0x2B,0x00,0x7D,
-  0x33,0x00,0x74,0x3C,0x00,0x74,0x00,0x00,0x00,0x00,
+  0x00,0x28,0x64,0x94,0xC5,0x02,0x07,0x00,0x00,0x04,
+  0x9C,0x2C,0x00,0x8F,0x34,0x00,0x84,0x3F,0x00,0x7C,
+  0x4C,0x00,0x77,0x5B,0x00,0x77,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x18,0x16,0x14,0x12,0x10,0x0E,0x0C,0x0A,
   0x08,0x06,0x04,0x02,0xFF,0xFF,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x24,0x22,0x21,0x20,0x1F,0x1E,0x1D,0x1C,
-  0x18,0x16,0x13,0x12,0x10,0x0F,0x0A,0x08,0x06,0x04,
+  0x00,0x00,0x16,0x18,0x1C,0x1D,0x1E,0x1F,0x20,0x21,
+  0x22,0x24,0x13,0x12,0x10,0x0F,0x0A,0x08,0x06,0x04,
   0x02,0x00,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-  0x00,0x00,0x00,0x00,0x11,0x01	
+  0x00,0x00,0x00,0x00,0x24,0x01	
+};
+
+// 4.3寸屏GT5688驱动配置,注意gt5688第一个参数要写成0x97才会更新配置
+uint8_t CTP_CFG_GT5688[] =  {
+0x97,0xE0,0x01,0x10,0x01,0x05,0x0D,0x00,0x01,0x00,
+0x00,0x05,0x5A,0x46,0x53,0x11,0x00,0x00,0x11,0x11,
+0x14,0x14,0x14,0x22,0x0A,0x04,0x00,0x00,0x00,0x00,
+0x00,0x00,0x53,0x00,0x14,0x00,0x00,0x84,0x00,0x00,
+0x3C,0x00,0x00,0x64,0x1E,0x28,0x87,0x27,0x08,0x32,
+0x34,0x05,0x0D,0x20,0x33,0x60,0x11,0x02,0x24,0x00,
+0x00,0x64,0x80,0x80,0x14,0x02,0x00,0x00,0x54,0x89,
+0x68,0x85,0x6D,0x82,0x72,0x80,0x76,0x7D,0x7B,0x7B,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xF0,0x50,0x3C,
+0xFF,0xFF,0x07,0x00,0x00,0x00,0x02,0x14,0x14,0x03,
+0x04,0x00,0x21,0x64,0x0A,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x32,0x20,0x50,0x3C,0x3C,0x00,0x00,0x00,0x00,0x00,
+0x0D,0x06,0x0C,0x05,0x0B,0x04,0x0A,0x03,0xFF,0xFF,
+0xFF,0xFF,0xFF,0xFF,0x00,0x01,0x02,0x03,0x04,0x05,
+0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,0xFF,0xFF,
+0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
+0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+0x00,0x00,0x00,0x00,0x3C,0x00,0x05,0x1E,0x00,0x02,
+0x2A,0x1E,0x19,0x14,0x02,0x00,0x03,0x0A,0x05,0x00,
+0x00,0x00,0x00,0x00,0x00,0x00,0x01,0xFF,0xFF,0x86,
+0x22,0x03,0x00,0x00,0x33,0x00,0x0F,0x00,0x00,0x00,
+0x50,0x3C,0x50,0x00,0x00,0x00,0x00,0x2A,0x01
 };
 
 
-uint8_t config[GTP_CONFIG_MAX_LENGTH + GTP_ADDR_LENGTH]
-                = {GTP_REG_CONFIG_DATA >> 8, GTP_REG_CONFIG_DATA & 0xff};
+//uint8_t config[GTP_CONFIG_MAX_LENGTH + GTP_ADDR_LENGTH]
+//                = {GTP_REG_CONFIG_DATA >> 8, GTP_REG_CONFIG_DATA & 0xff};
 
-TOUCH_IC touchIC;								
+/* 触摸IC类型默认为5寸屏的ic */
+TOUCH_IC touchIC = GT9157;		
+
+const TOUCH_PARAM_TypeDef touch_param[3] = 
+{
+  /* GT9157,5寸屏 */
+  {
+    .max_width = 800,
+    .max_height = 480,
+    .config_reg_addr = 0x8047,
+  },
+  /* GT911,7寸屏 */
+  {
+    .max_width = 800,
+    .max_height = 480,
+    .config_reg_addr = 0x8047,
+  },
+  /* GT5688,4.3寸屏 */
+  {
+    .max_width = 480,
+    .max_height = 272,
+    .config_reg_addr = 0x8050,
+  }
+};							
 
 static int8_t GTP_I2C_Test(void);
 //static void GT91xx_Config_Read_Proc(void);
@@ -106,7 +157,6 @@ static int I2C_Transfer( struct i2c_msg *msgs,int num)
 			ret = I2C_WriteBytes(msgs[im].addr,  msgs[im].buf, msgs[im].len);	//IIC写入数据
 		}
 	}
-
 	if(ret)
 		return ret;
 
@@ -263,8 +313,9 @@ void GTP_IRQ_Disable(void)
   */
 void GTP_IRQ_Enable(void)
 {
-	GTP_DEBUG_FUNC();
-	I2C_GTP_IRQEnable();    
+    GTP_DEBUG_FUNC();
+     
+	  I2C_GTP_IRQEnable();    
 }
 
 
@@ -288,18 +339,21 @@ static void GTP_Touch_Down(int32_t id,int32_t x,int32_t y,int32_t w)
 
 	/*取x、y初始值大于屏幕像素值*/
     GTP_DEBUG("ID:%d, X:%d, Y:%d, W:%d", id, x, y, w);
+
 	
     /* 处理触摸按钮，用于触摸画板 */
-    Touch_Button_Down(x,y); 	
+    Touch_Button_Down(x,y); 
+	
 
     /*处理描绘轨迹，用于触摸画板 */
     Draw_Trail(pre_x[id],pre_y[id],x,y,&brush);
 	
-	/************************************/
-	/*在此处添加自己的触摸点按下时处理过程即可*/
-	/* (x,y) 即为最新的触摸点 *************/
-	/************************************/
-	/*prex,prey数组存储上一次触摸的位置，id为轨迹编号(多点触控时有多轨迹)*/
+		/************************************/
+		/*在此处添加自己的触摸点按下时处理过程即可*/
+		/* (x,y) 即为最新的触摸点 *************/
+		/************************************/
+	
+		/*prex,prey数组存储上一次触摸的位置，id为轨迹编号(多点触控时有多轨迹)*/
     pre_x[id] = x; pre_y[id] =y;
 	
 }
@@ -313,18 +367,23 @@ static void GTP_Touch_Down(int32_t id,int32_t x,int32_t y,int32_t w)
 static void GTP_Touch_Up( int32_t id)
 {
 	
+
     /*处理触摸释放,用于触摸画板*/
     Touch_Button_Up(pre_x[id],pre_y[id]);
-	/*****************************************/
-	/*在此处添加自己的触摸点释放时的处理过程即可*/
-	/* pre_x[id],pre_y[id] 即为最新的释放点 ****/
-	/*******************************************/	
-	/***id为轨迹编号(多点触控时有多轨迹)********/	
+
+		/*****************************************/
+		/*在此处添加自己的触摸点释放时的处理过程即可*/
+		/* pre_x[id],pre_y[id] 即为最新的释放点 ****/
+		/*******************************************/	
+		/***id为轨迹编号(多点触控时有多轨迹)********/
+	
+	
     /*触笔释放，把pre xy 重置为负*/
 	  pre_x[id] = -1;
 	  pre_y[id] = -1;		
   
     GTP_DEBUG("Touch id[%2d] release!", id);
+
 }
 
 
@@ -621,6 +680,7 @@ Output:
     int32_t i = 0;
     uint8_t check_sum = 0;
     int32_t retry = 0;
+    uint8_t* config;
 
     uint8_t* cfg_info;
     uint8_t cfg_info_len  ;
@@ -642,29 +702,59 @@ Output:
 		//获取触摸IC的型号
     GTP_Read_Version(); 
 		
-		//根据IC的型号指向不同的配置
-		if(touchIC == GT9157)
-		{
-			cfg_info =  CTP_CFG_GT9157; //指向寄存器配置
-			cfg_info_len = CFG_GROUP_LEN(CTP_CFG_GT9157);//计算配置表的大小
-		}
-		else
-		{
-			cfg_info =  CTP_CFG_GT911;//指向寄存器配置
-			cfg_info_len = CFG_GROUP_LEN(CTP_CFG_GT911) ;//计算配置表的大小
-		}			
+    //根据IC的型号指向不同的配置
+    if(touchIC == GT9157)
+    {
+        cfg_info =  CTP_CFG_GT9157; //指向寄存器配置
+        cfg_info_len = CFG_GROUP_LEN(CTP_CFG_GT9157);//计算配置表的大小
+    }
+    else if(touchIC == GT911)
+    {
+        cfg_info =  CTP_CFG_GT911;//指向寄存器配置
+        cfg_info_len = CFG_GROUP_LEN(CTP_CFG_GT911) ;//计算配置表的大小
+    }
+    else if(touchIC == GT5688)			
+    {
+        cfg_info =  CTP_CFG_GT5688; //指向寄存器配置
+        cfg_info_len = CFG_GROUP_LEN(CTP_CFG_GT5688);//计算配置表的大小
+    }		
 
     memset(&config[GTP_ADDR_LENGTH], 0, GTP_CONFIG_MAX_LENGTH);
     memcpy(&config[GTP_ADDR_LENGTH], cfg_info, cfg_info_len);
 		
-    //计算要写入checksum寄存器的值
-    check_sum = 0;
-    for (i = GTP_ADDR_LENGTH; i < cfg_num+GTP_ADDR_LENGTH; i++)
+//    //计算要写入checksum寄存器的值
+//    check_sum = 0;
+//    for (i = GTP_ADDR_LENGTH; i < cfg_num+GTP_ADDR_LENGTH; i++)
+//    {
+//        check_sum += config[i];
+//    }
+//    config[ cfg_num+GTP_ADDR_LENGTH] = (~check_sum) + 1; 	//checksum
+//    config[ cfg_num+GTP_ADDR_LENGTH+1] =  1; 						//refresh 配置更新标志
+    
+    /* 计算check sum校验值 */
+    if(touchIC == GT911 || touchIC == GT9157)
     {
-        check_sum += config[i];
+        for (i = GTP_ADDR_LENGTH; i < cfg_num+GTP_ADDR_LENGTH; i++)
+        {
+            check_sum += (config[i] & 0xFF);
+        }
+        config[ cfg_num+GTP_ADDR_LENGTH] = (~(check_sum & 0xFF)) + 1; 	//checksum
+        config[ cfg_num+GTP_ADDR_LENGTH+1] =  1; 						//refresh 配置更新标志
     }
-    config[ cfg_num+GTP_ADDR_LENGTH] = (~check_sum) + 1; 	//checksum
-    config[ cfg_num+GTP_ADDR_LENGTH+1] =  1; 						//refresh 配置更新标志
+    else if(touchIC == GT5688) 
+    {
+      for (i = GTP_ADDR_LENGTH; i < (cfg_num+GTP_ADDR_LENGTH -3); i += 2) 
+      {
+        check_sum += (config[i] << 8) + config[i + 1];
+      }
+      
+      check_sum = 0 - check_sum;
+      GTP_DEBUG("Config checksum: 0x%04X", check_sum);
+      //更新checksum
+      config[(cfg_num+GTP_ADDR_LENGTH -3)] = (check_sum >> 8) & 0xFF;
+      config[(cfg_num+GTP_ADDR_LENGTH -2)] = check_sum & 0xFF;
+      config[(cfg_num+GTP_ADDR_LENGTH -1)] = 0x01;
+    }
 
     //写入配置信息
     for (retry = 0; retry < 5; retry++)
@@ -742,22 +832,48 @@ int32_t GTP_Read_Version(void)
         return ret;
     }
 
-    if (buf[5] == 0x00)
-    {
-        GTP_INFO("IC1 Version: %c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[7], buf[6]);
-				
-				//GT911芯片
-				if(buf[2] == '9' && buf[3] == '1' && buf[4] == '1')
+    if (buf[2] == '9')
+    {				
+        //GT911芯片
+        if(buf[2] == '9' && buf[3] == '1' && buf[4] == '1')
+        {
+          GTP_INFO("IC1 Version: %c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[7], buf[6]);
+
 					touchIC = GT911;
+          /* 设置当前的液晶屏类型 */
+          cur_lcd = INCH_7;
+        }
+        //GT9157芯片
+        else if( buf[2] == '9' && buf[3] == '1' && buf[4] == '5' && buf[5] == '7')
+        {
+          GTP_INFO("IC2 Version: %c%c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[5], buf[7], buf[6]);
+
+					touchIC = GT9157;
+          /* 设置当前的液晶屏类型 */
+          cur_lcd = INCH_5;
+        }
+        else
+           GTP_INFO("Unknown IC Version: %c%c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[5], buf[7], buf[6]);
+
+    }    
+    else if (buf[2] == '5')
+    {	
+        //GT5688芯片
+        if(buf[2] == '5' && buf[3] == '6' && buf[4] == '8' && buf[5] == '8')
+        {
+          GTP_INFO("IC3 Version: %c%c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[5], buf[7], buf[6]);
+
+					touchIC = GT5688;
+          /* 设置当前的液晶屏类型 */
+          cur_lcd = INCH_4_3;
+        }
+        else
+           GTP_INFO("Unknown IC Version: %c%c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[5], buf[7], buf[6]);
+
     }
     else
-    {
-        GTP_INFO("IC2 Version: %c%c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[5], buf[7], buf[6]);
-				
-				//GT9157芯片
-				if(buf[2] == '9' && buf[3] == '1' && buf[4] == '5' && buf[5] == '7')
-					touchIC = GT9157;
-		}
+       GTP_INFO("Unknown IC Version: %c%c%c%c_%02x%02x", buf[2], buf[3], buf[4], buf[5], buf[7], buf[6]);
+
     return ret;
 }
 
@@ -897,3 +1013,8 @@ static int32_t GT91xx_Config_Write_Proc(void)
 
 #endif
 
+
+
+
+//MODULE_DESCRIPTION("GTP Series Driver");
+//MODULE_LICENSE("GPL");

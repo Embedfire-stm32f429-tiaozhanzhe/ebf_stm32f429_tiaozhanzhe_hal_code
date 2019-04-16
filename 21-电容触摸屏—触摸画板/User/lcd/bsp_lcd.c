@@ -8,7 +8,7 @@
   ******************************************************************************
   * @attention
   *
-  * 实验平台:秉火  STM32 F767 开发板  
+  * 实验平台:秉火 STM32 F429 开发板  
   * 论坛    :http://www.firebbs.cn
   * 淘宝    :http://firestm32.taobao.com
   *
@@ -40,17 +40,86 @@ LCD_DrawPropTypeDef DrawProp[MAX_LAYER_NUMBER];
  * @param  None
  * @retval None
  */
+ 
+/* 不同液晶屏的参数 */
+const LCD_PARAM_TypeDef lcd_param[LCD_TYPE_NUM]={
+
+  /* 5寸屏参数 */
+  {
+    /*根据液晶数据手册的参数配置*/
+    .hbp = 46,  //HSYNC后的无效像素
+    .vbp = 23,  //VSYNC后的无效行数
+
+    .hsw = 1,  	//HSYNC宽度
+    .vsw = 1,   //VSYNC宽度
+
+    .hfp = 22,  	//HSYNC前的无效像素
+    .vfp = 22,  	//VSYNC前的无效行数
+    
+    .comment_clock_2byte = 33, //rgb565/argb4444等双字节像素时推荐使用的液晶时钟频率
+    .comment_clock_4byte = 21, //Argb8888等四字节像素时推荐使用的液晶时钟频率
+
+    
+    .lcd_pixel_width = LCD_MAX_PIXEL_WIDTH,//液晶分辨率，宽
+    .lcd_pixel_height = LCD_MAX_PIXEL_HEIGHT,//液晶分辨率，高
+
+  },
+  
+   /* 7寸屏参数（与5寸一样） */
+  {
+    /*根据液晶数据手册的参数配置*/
+    .hbp = 46,  //HSYNC后的无效像素
+    .vbp = 23,  //VSYNC后的无效行数
+
+    .hsw = 1,  	//HSYNC宽度
+    .vsw = 1,   //VSYNC宽度
+
+    .hfp = 22,  	//HSYNC前的无效像素
+    .vfp = 22,  	//VSYNC前的无效行数
+    
+    .comment_clock_2byte = 33, //rgb565/argb4444等双字节像素时推荐使用的液晶时钟频率
+    .comment_clock_4byte = 21, //Argb8888等四字节像素时推荐使用的液晶时钟频率
+
+    
+    .lcd_pixel_width = LCD_MAX_PIXEL_WIDTH,//液晶分辨率，宽
+    .lcd_pixel_height = LCD_MAX_PIXEL_HEIGHT,//液晶分辨率，高
+  
+  },
+
+  /* 4.3寸屏参数 */
+  {
+      /*根据液晶数据手册的参数配置*/
+    .hbp = 8,  //HSYNC后的无效像素
+    .vbp = 2,  //VSYNC后的无效行数
+
+    .hsw = 41,  	//HSYNC宽度
+    .vsw = 10,   //VSYNC宽度
+
+    .hfp = 4,  	//HSYNC前的无效像素
+    .vfp = 4,  	//VSYNC前的无效行数
+    
+    .comment_clock_2byte = 15, //rgb565/argb4444等双字节像素时推荐使用的液晶时钟频率
+    .comment_clock_4byte = 15, //Argb8888等四字节像素时推荐使用的液晶时钟频率
+    
+    .lcd_pixel_width = 480,//液晶分辨率，宽
+    .lcd_pixel_height = 272,//液晶分辨率，高
+   
+  }
+};
 
 
-/*根据液晶数据手册的参数配置*/
-#define HBP  46		//HSYNC后的无效像素
-#define VBP  23		//VSYNC后的无效行数
+LCD_TypeDef cur_lcd = INCH_5;
 
-#define HSW   1		//HSYNC宽度
-#define VSW   1		//VSYNC宽度
 
-#define HFP  22		//HSYNC前的无效像素
-#define VFP  22		//VSYNC前的无效行数
+///*根据液晶数据手册的参数配置*/
+//#define HBP  46		//HSYNC后的无效像素
+//#define VBP  23		//VSYNC后的无效行数
+
+//#define HSW   1		//HSYNC宽度
+//#define VSW   1		//VSYNC宽度
+
+//#define HFP  22		//HSYNC前的无效像素
+//#define VFP  22		//VSYNC前的无效行数
 
 static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *c);
 static void FillTriangle(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1, uint16_t y2, uint16_t y3);
@@ -248,7 +317,7 @@ void LCD_Init(void)
     /* PLLLCDCLK = PLLSAI_VCO Output/PLLSAIR = 192/2 = 96 Mhz */
     /* LTDC clock frequency = PLLLCDCLK / LTDC_PLLSAI_DIVR_4 = 96/4 = 24Mhz */
     periph_clk_init_struct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-    periph_clk_init_struct.PLLSAI.PLLSAIN = 192;
+    periph_clk_init_struct.PLLSAI.PLLSAIN = 180;
     periph_clk_init_struct.PLLSAI.PLLSAIR = 2;
     periph_clk_init_struct.PLLSAIDivR = RCC_PLLSAIDIVR_4;
     HAL_RCCEx_PeriphCLKConfig(&periph_clk_init_struct);

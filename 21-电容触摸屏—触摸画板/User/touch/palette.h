@@ -4,9 +4,16 @@
 #include "stm32f4xx.h"
 #include "./lcd/bsp_lcd.h"
  
+typedef struct
+{
+   /* 不同的液晶使用不同的宽高 */
+  uint16_t width;
+  uint16_t height;
+  
+}COLOR_BLOCK_PARAM_TypeDef;
 
-#define COLOR_BLOCK_WIDTH   90
-#define COLOR_BLOCK_HEIGHT  50
+#define COLOR_BLOCK_WIDTH   color_block_param[cur_lcd].width
+#define COLOR_BLOCK_HEIGHT  color_block_param[cur_lcd].height
 
 #define BUTTON_NUM 18
 #define PALETTE_START_Y   0

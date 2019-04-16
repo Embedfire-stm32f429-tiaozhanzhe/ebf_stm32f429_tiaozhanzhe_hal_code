@@ -8,7 +8,7 @@
   ******************************************************************************
   * @attention
   *
-  * 实验平台:秉火  STM32  F746 开发板
+  * 实验平台:秉火 STM32 F429 开发板
   * 论坛    :http://www.firebbs.cn
   * 淘宝    :http://firestm32.taobao.com
   *
@@ -21,6 +21,27 @@
 
 extern uint32_t  ActiveLayer;
 extern LCD_DrawPropTypeDef DrawProp[MAX_LAYER_NUMBER];
+
+const COLOR_BLOCK_PARAM_TypeDef color_block_param[LCD_TYPE_NUM] =
+{
+  /* 5寸屏的色块大小 */
+  {
+    .width = 90,
+    .height = 50,
+  },
+  
+  /* 7寸屏的色块大小 */
+  {
+    .width = 90,
+    .height = 50,
+  },
+  
+  /* 4.3寸屏的色块大小 */
+  {
+    .width = 55,
+    .height = 30,
+  }
+};
 
 /*按钮结构体数组*/
 Touch_Button button[BUTTON_NUM];
@@ -497,11 +518,11 @@ static void Draw_Clear_Button(void *btn)
   if(ptr->touch_flag == 0)
   {
 	
-		LCD_SetColors(LCD_COLOR_LIGHTGRAY,LCD_COLOR_WHITE);
+    LCD_SetColors(LCD_COLOR_LIGHTGRAY,LCD_COLOR_WHITE);
     LCD_FillRect(ptr->start_x,
-                      ptr->start_y,
-                      ptr->end_x - ptr->start_x,
-											ptr->end_y - ptr->start_y);
+                  ptr->start_y,
+                  ptr->end_x - ptr->start_x,
+                  ptr->end_y - ptr->start_y);
     
 
 		
@@ -509,29 +530,31 @@ static void Draw_Clear_Button(void *btn)
 		/*选择字体，使用中英文显示时，尽量把英文选择成16*24的字体，
 		*中文字体大小是24*24的，需要其它字体请自行制作字模*/
 		/*这个函数只对英文字体起作用*/
-		LCD_SetFont(&LCD_DEFAULT_FONT);
-		LCD_DispString_EN_CH( ptr->start_y+25,
-														ptr->start_x + (ptr->end_x - ptr->start_x - 24*2 )/2,                     
-														(uint8_t*)"清屏");
+		LCD_SetFont(&Font24);
+//		LCD_DispString_EN_CH( ptr->start_y+25,
+//        ptr->start_x + (ptr->end_x - ptr->start_x - 24*2 )/2,                     
+//        (uint8_t*)"C");//清屏
+    LCD_DispString_EN_CH(  (ptr->end_y - ptr->start_y)/2 + ptr->start_y - 12,
+                          (ptr->end_x - ptr->start_x)/2 - 6,                     
+        (uint8_t*)"C");//清屏
   }
   else  /*按键按下*/
   {
 		
 		LCD_SetColors(LCD_COLOR_WHITE,LCD_COLOR_WHITE);
     LCD_FillRect(ptr->start_x,
-                      ptr->start_y,
-                      ptr->end_x - ptr->start_x,
-											ptr->end_y - ptr->start_y);
+                  ptr->start_y,
+                  ptr->end_x - ptr->start_x,
+                  ptr->end_y - ptr->start_y);
     
 		
 		LCD_SetColors(LCD_COLOR_RED,LCD_COLOR_WHITE);
 		/*选择字体，使用中英文显示时，尽量把英文选择成16*24的字体，
 		*中文字体大小是24*24的，需要其它字体请自行制作字模*/
 		/*这个函数只对英文字体起作用*/
-		LCD_SetFont(&LCD_DEFAULT_FONT);
-    LCD_DispString_EN_CH( ptr->start_y+25,
-														ptr->start_x + (ptr->end_x - ptr->start_x - 24*2 )/2,                     
-														(uint8_t*)"清屏");
+		LCD_DispString_EN_CH( (ptr->end_y - ptr->start_y)/2 + ptr->start_y - 12,
+                          (ptr->end_x - ptr->start_x)/2 - 6,                     
+                          (uint8_t*)"C");//清屏
   } 
   
      /*按钮边框*/
@@ -692,22 +715,22 @@ static void Draw_Shape_Button(void *btn)
       
       
     case RUBBER:
-			LCD_SetColors(LCD_COLOR_WHITE,LCD_COLOR_BLACK);
-       LCD_FillRect( ptr->start_x+((ptr->end_x - ptr->start_x -40)/2),
-                          ptr->start_y+ ((ptr->end_y - ptr->start_y-40 -30)/2),
-                          40,
-                          40 );   
+//			LCD_SetColors(LCD_COLOR_WHITE,LCD_COLOR_BLACK);
+//            LCD_FillRect( ptr->start_x+((ptr->end_x - ptr->start_x -40)/2),
+//                          ptr->start_y+ ((ptr->end_y - ptr->start_y-40 -30)/2),
+//                          40,
+//                          40 );   
       
   
 			LCD_SetColors(LCD_COLOR_RED,LCD_COLOR_LIGHTGRAY);    
 
-		/*选择字体，使用中英文显示时，尽量把英文选择成16*24的字体，
-		*中文字体大小是24*24的，需要其它字体请自行制作字模*/
-		/*这个函数只对英文字体起作用*/
-		LCD_SetFont(&Font24);
-    LCD_DispString_EN_CH( ptr->end_y -30,
-														ptr->start_x+(ptr->end_x - ptr->start_x -24*2)/2,
-														(uint8_t*)"橡皮");
+            /*选择字体，使用中英文显示时，尽量把英文选择成16*24的字体，
+            *中文字体大小是24*24的，需要其它字体请自行制作字模*/
+            /*这个函数只对英文字体起作用*/
+            LCD_SetFont(&Font24);
+            LCD_DispString_EN_CH((ptr->end_y - ptr->start_y)/2 + ptr->start_y - 12,
+                                  ptr->start_x + (ptr->end_x - ptr->start_x)/2 - 6,                     
+                                 (uint8_t*)"R");//橡皮
 		
 
     break;

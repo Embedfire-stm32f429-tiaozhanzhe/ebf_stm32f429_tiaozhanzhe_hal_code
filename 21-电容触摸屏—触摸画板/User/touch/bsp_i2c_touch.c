@@ -100,6 +100,8 @@ static void I2C_GPIO_Config(void)
   /*使能触摸屏使用的引脚的时钟*/
   GTP_I2C_SCL_GPIO_CLK_ENABLE();
   GTP_I2C_SDA_GPIO_CLK_ENABLE(); 
+  GTP_INT_GPIO_CLK_ENABLE();
+  GTP_RST_GPIO_CLK_ENABLE(); 
 
 #if !(SOFT_IIC)   //使用硬件IIC 
     
@@ -169,23 +171,17 @@ void I2C_ResetChip(void)
 
 	/*初始化GT9157,rst为高电平，int为低电平，则gt9157的设备地址被配置为0xBA*/
 
+  HAL_GPIO_WritePin (GTP_INT_GPIO_PORT,GTP_INT_GPIO_PIN,GPIO_PIN_RESET);
 	/*复位为低电平，为初始化做准备*/
 	HAL_GPIO_WritePin (GTP_RST_GPIO_PORT,GTP_RST_GPIO_PIN,GPIO_PIN_RESET);
-	Delay(0x0FFFFF);
+	Delay(0x01FFFFF);
+  HAL_Delay(10);
 
 	/*拉高一段时间，进行初始化*/
 	HAL_GPIO_WritePin (GTP_RST_GPIO_PORT,GTP_RST_GPIO_PIN,GPIO_PIN_SET);
-	Delay(0x0FFFFF);
+	Delay(0x01FFFFF);
+   HAL_Delay(10);
 
-	  /*初始化GT9157,rst为高电平，int为低电平，则gt9157的设备地址被配置为0xBA*/
-
-	/*复位为低电平，为初始化做准备*/
-	HAL_GPIO_WritePin (GTP_RST_GPIO_PORT,GTP_RST_GPIO_PIN,GPIO_PIN_RESET);
-	Delay(0x0FFFFF);
-
-	/*拉高一段时间，进行初始化*/
-	HAL_GPIO_WritePin (GTP_RST_GPIO_PORT,GTP_RST_GPIO_PIN,GPIO_PIN_SET);
-	Delay(0x0FFFFF);
 
 	/*把INT引脚设置为浮空输入模式，以便接收触摸中断信号*/
 	GPIO_InitStructure.Pin = GTP_INT_GPIO_PIN;
@@ -193,6 +189,8 @@ void I2C_ResetChip(void)
 	GPIO_InitStructure.Speed = GPIO_SPEED_HIGH;
 	GPIO_InitStructure.Pull  = GPIO_NOPULL;
 	HAL_GPIO_Init(GTP_INT_GPIO_PORT, &GPIO_InitStructure);
+   HAL_Delay(80);
+
 }
 
 /**
@@ -206,7 +204,7 @@ static void I2C_Mode_Config(void)
   I2C_Handle.Instance             = GTP_I2C;
   
   I2C_Handle.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
-  I2C_Handle.Init.ClockSpeed      = 400000;
+  I2C_Handle.Init.ClockSpeed      = 300000;
   I2C_Handle.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
   I2C_Handle.Init.DutyCycle       = I2C_DUTYCYCLE_2;
   I2C_Handle.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
@@ -255,7 +253,7 @@ void I2C_Touch_Init(void)
 #endif
   
   I2C_ResetChip();
-  I2C_GTP_IRQEnable();
+  I2C_GTP_IRQDisable();
 }
 
 
@@ -274,8 +272,13 @@ __IO uint32_t  I2CTimeout = I2CT_LONG_TIMEOUT;
   */
 uint32_t I2C_ReadBytes(uint8_t ClientAddr,uint8_t* pBuffer, uint16_t NumByteToRead)
 {
-  HAL_I2C_Master_Receive(&I2C_Handle,ClientAddr,pBuffer,NumByteToRead,1000);    
-  return 0;
+  int ret;
+  ret = HAL_I2C_Master_Receive(&I2C_Handle,ClientAddr,pBuffer,NumByteToRead,1000);
+  
+  if(ret == HAL_OK)
+    return 0;
+ 
+  return 1;
 }
 
 
@@ -289,9 +292,12 @@ uint32_t I2C_ReadBytes(uint8_t ClientAddr,uint8_t* pBuffer, uint16_t NumByteToRe
   */
 uint32_t I2C_WriteBytes(uint8_t ClientAddr,uint8_t* pBuffer,  uint8_t NumByteToWrite)
 {
-  HAL_I2C_Master_Transmit(&I2C_Handle,ClientAddr,pBuffer,NumByteToWrite,1000);
-  return 0;  
-
+  int ret;
+  ret = HAL_I2C_Master_Transmit(&I2C_Handle,ClientAddr,pBuffer,NumByteToWrite,1000);
+  
+  if(ret == HAL_OK)return 0;  
+  
+  return 1;
 }
 
 #else //使用软件IIC
