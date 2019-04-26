@@ -4,11 +4,11 @@
   * @author  fire
   * @version V1.0
   * @date    2019-xx-xx
-  * @brief   BMP280 读温度和气压实验
+  * @brief   AP3216C 读光照实验
   ******************************************************************************
   * @attention
   *
-  * 实验平台:野火 LiteOS develop kit 开发板 
+  * 实验平台:野火 STM32 F429 开发板 
   * 论坛    :http://www.firebbs.cn
   * 淘宝    :http://firestm32.taobao.com
   *
@@ -43,14 +43,10 @@ int main(void)
   SystemClock_Config();
   /* 初始化内核延时 */
   HAL_InitTick(5);
-	/* 初始化RGB彩灯 */ 
-  LED_GPIO_Config(); 
-  /* 按键初始化 */
-  Key_GPIO_Config();
   /*初始化USART 配置模式为 115200 8-N-1，中断接收*/
   DEBUG_USART_Config();
   
-  printf("\r\n 欢迎使用野火 LiteOS develop kit 开发板。\r\n");	
+  printf("\r\n 欢迎使用野火 STM32 F429 开发板。\r\n");	
   printf("\r\n 这是一个三合一光照传感器测试例程 \r\n");
   
   printf(" 芯片初始化中.....\n");
