@@ -15,14 +15,14 @@
 #define RCC_PERIPHCLK_UARTx                     RCC_PERIPHCLK_USART2
 #define RCC_UARTxCLKSOURCE_SYSCLK               RCC_USART2CLKSOURCE_SYSCLK
 
-#define DEBUG_USART_RX_GPIO_PORT                GPIOA
-#define DEBUG_USART_RX_GPIO_CLK_ENABLE()        __GPIOA_CLK_ENABLE()
-#define DEBUG_USART_RX_PIN                      GPIO_PIN_3
+#define DEBUG_USART_RX_GPIO_PORT                GPIOD
+#define DEBUG_USART_RX_GPIO_CLK_ENABLE()        __GPIOD_CLK_ENABLE()
+#define DEBUG_USART_RX_PIN                      GPIO_PIN_6
 #define DEBUG_USART_RX_AF                       GPIO_AF7_USART2
 
-#define DEBUG_USART_TX_GPIO_PORT                GPIOA
-#define DEBUG_USART_TX_GPIO_CLK_ENABLE()        __GPIOA_CLK_ENABLE()
-#define DEBUG_USART_TX_PIN                      GPIO_PIN_2
+#define DEBUG_USART_TX_GPIO_PORT                GPIOD
+#define DEBUG_USART_TX_GPIO_CLK_ENABLE()        __GPIOD_CLK_ENABLE()
+#define DEBUG_USART_TX_PIN                      GPIO_PIN_5
 #define DEBUG_USART_TX_AF                       GPIO_AF7_USART2
 
 #define DEBUG_USART_IRQHandler                  USART2_IRQHandler

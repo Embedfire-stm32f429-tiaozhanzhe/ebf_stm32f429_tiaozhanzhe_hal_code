@@ -4,7 +4,7 @@
   * @author  fire
   * @version V1.0
   * @date    2016-xx-xx
-  * @brief   使用串口1，重定向c库printf函数到usart端口，中断接收模式
+  * @brief   使用串口2，重定向c库printf函数到usart端口，中断接收模式
   ******************************************************************************
   * @attention
   *
@@ -21,7 +21,8 @@ UART_HandleTypeDef UartHandle;
 extern uint8_t ucTemp;  
 
  /**
-  * @brief  DEBUG_USART GPIO 配置,工作模式配置。115200 8-N-1
+  * @brief  DEBUG_USART GPIO 配置,工作模式配置。115200 8-N-1,
+	*         使用RS232接口，需要将PD5-T1IN和PD6-R1OUT用跳线帽连接
   * @param  无
   * @retval 无
   */  
