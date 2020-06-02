@@ -4,7 +4,7 @@
   * @author  fire
   * @version V1.0
   * @date    2017-xx-xx
-  * @brief   GPIO输出--使用固件库点亮LED灯
+  * @brief   USART1指令控制RGB彩灯
   ******************************************************************************
   * @attention
   *

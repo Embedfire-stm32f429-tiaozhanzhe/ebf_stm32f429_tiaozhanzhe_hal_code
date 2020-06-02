@@ -4,7 +4,7 @@
   * @author  fire
   * @version V1.0
   * @date    2017-xx-xx
-  * @brief   GPIO输出--使用固件库点亮LED灯
+  * @brief   GPIO输入--按键检测
   ******************************************************************************
   * @attention
   *
@@ -32,11 +32,12 @@ int main(void)
 {
   /* 系统时钟初始化成216 MHz */
   SystemClock_Config();
+	
 	/* LED 端口初始化 */
 	LED_GPIO_Config();	 
   
-    /*初始化按键*/
-    Key_GPIO_Config();
+  /*初始化按键*/
+  Key_GPIO_Config();
 	
  
 	/* 轮询按键状态，若按键按下则反转LED */ 

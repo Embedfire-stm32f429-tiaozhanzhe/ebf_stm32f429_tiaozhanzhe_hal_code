@@ -4,7 +4,7 @@
   * @author  fire
   * @version V1.0
   * @date    2017-xx-xx
-  * @brief   GPIO输出--使用固件库点亮LED灯
+  * @brief   RS232_USART2接发，使用跳线帽连接 T1IN<--->PD5,R1OUT<--->PD6
   ******************************************************************************
   * @attention
   *
@@ -20,10 +20,6 @@
 #include "stm32f4xx.h"
 #include "./usart/bsp_debug_usart.h"
  
-//volatile uint8_t Rxflag=0;
-//extern  uint8_t UART1_RxBuff;
-//extern uint8_t ucnt;
-
 uint8_t ucTemp;
 /**
   * @brief  主函数
