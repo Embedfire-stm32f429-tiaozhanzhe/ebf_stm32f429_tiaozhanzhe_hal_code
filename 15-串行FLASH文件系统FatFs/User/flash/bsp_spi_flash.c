@@ -93,7 +93,7 @@ void SPI_FLASH_Init(void)
   __HAL_SPI_ENABLE(&SpiHandle); 
 
   /* 使 SPI_FLASH 进入 4 字节地址模式 */
-	SPI_FLASH_Mode_Init();  
+//	SPI_FLASH_Mode_Init();  
 }
 
 
@@ -113,10 +113,8 @@ void SPI_FLASH_SectorErase(uint32_t SectorAddr)
   /* 发送扇区擦除指令*/
   SPI_FLASH_SendByte(W25X_SectorErase);
   /*发送擦除扇区地址的高8位*/
-  SPI_FLASH_SendByte((SectorAddr & 0xFF000000) >> 24);
-  /*发送擦除扇区地址的中前8位*/
   SPI_FLASH_SendByte((SectorAddr & 0xFF0000) >> 16);
-  /* 发送擦除扇区地址的中后8位 */
+  /* 发送擦除扇区地址的中8位 */
   SPI_FLASH_SendByte((SectorAddr & 0xFF00) >> 8);
   /* 发送擦除扇区地址的低8位 */
   SPI_FLASH_SendByte(SectorAddr & 0xFF);
@@ -167,10 +165,8 @@ void SPI_FLASH_PageWrite(uint8_t* pBuffer, uint32_t WriteAddr, uint32_t NumByteT
   SPI_FLASH_SendByte(W25X_PageProgram);
 
   /*发送写地址的高8位*/
-  SPI_FLASH_SendByte((WriteAddr & 0xFF000000) >> 24);
-  /*发送写地址的中前8位*/
   SPI_FLASH_SendByte((WriteAddr & 0xFF0000) >> 16);
-  /*发送写地址的中后8位*/
+  /*发送写地址的中8位*/
   SPI_FLASH_SendByte((WriteAddr & 0xFF00) >> 8);
   /*发送写地址的低8位*/
   SPI_FLASH_SendByte(WriteAddr & 0xFF);
@@ -308,10 +304,8 @@ void SPI_FLASH_BufferRead(uint8_t* pBuffer, uint32_t ReadAddr, uint32_t NumByteT
   SPI_FLASH_SendByte(W25X_ReadData);
 
   /* 发送 读 地址高8位 */
-  SPI_FLASH_SendByte((ReadAddr & 0xFF000000) >> 24);
-  /* 发送 读 地址中前8位 */
   SPI_FLASH_SendByte((ReadAddr & 0xFF0000) >> 16);
-  /* 发送 读 地址中后8位 */
+  /* 发送 读 地址中8位 */
   SPI_FLASH_SendByte((ReadAddr& 0xFF00) >> 8);
   /* 发送 读 地址低8位 */
   SPI_FLASH_SendByte(ReadAddr & 0xFF);
@@ -587,7 +581,7 @@ void SPI_FLASH_Mode_Init(void)
 	SPI_FLASH_CS_LOW();
 	
 	/* 发送状态寄存器 3 命令 */
-	SPI_FLASH_SendByte(W25X_ReadStatusRegister3); 
+//	SPI_FLASH_SendByte(W25X_ReadStatusRegister3); 
 	
 	Temp = SPI_FLASH_SendByte(Dummy_Byte);
 	
@@ -600,7 +594,7 @@ void SPI_FLASH_Mode_Init(void)
 		SPI_FLASH_CS_LOW();
 		
 		/* 进入4字节模式 */
-		SPI_FLASH_SendByte(W25X_Enter4ByteMode);
+//		SPI_FLASH_SendByte(W25X_Enter4ByteMode);
 		
 		/* 停止信号 FLASH: CS 高 */
 		SPI_FLASH_CS_HIGH();

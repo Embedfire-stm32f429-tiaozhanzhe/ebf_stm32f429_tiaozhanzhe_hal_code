@@ -8,8 +8,8 @@
 //#define  sFLASH_ID                       0xEF3015     //W25X16
 //#define  sFLASH_ID                       0xEF4015	    //W25Q16
 //#define  sFLASH_ID                        0XEF4017     //W25Q64
-//#define  sFLASH_ID                       0XEF4018     //W25Q128
-#define  sFLASH_ID                       0XEF4019     //W25Q256
+#define  sFLASH_ID                       0XEF4018     //W25Q128
+//#define  sFLASH_ID                       0XEF4019     //W25Q256
 
 
 //#define SPI_FLASH_PageSize            4096
@@ -34,8 +34,8 @@
 #define W25X_DeviceID			        0xAB 
 #define W25X_ManufactDeviceID   	0x90 
 #define W25X_JedecDeviceID		    0x9F 
-#define W25X_Enter4ByteMode		    0xB7
-#define W25X_ReadStatusRegister3      0x15
+//#define W25X_Enter4ByteMode		    0xB7
+//#define W25X_ReadStatusRegister3      0x15
 
 #define WIP_Flag                  0x01  /* Write In Progress (WIP) flag */
 #define Dummy_Byte                0xFF
@@ -56,9 +56,11 @@
 #define SPIx_SCK_PIN                     GPIO_PIN_7
 #define SPIx_SCK_GPIO_PORT               GPIOF
 #define SPIx_SCK_AF                      GPIO_AF5_SPI5
+
 #define SPIx_MISO_PIN                    GPIO_PIN_8
 #define SPIx_MISO_GPIO_PORT              GPIOF
 #define SPIx_MISO_AF                     GPIO_AF5_SPI5
+
 #define SPIx_MOSI_PIN                    GPIO_PIN_9
 #define SPIx_MOSI_GPIO_PORT              GPIOF
 #define SPIx_MOSI_AF                     GPIO_AF5_SPI5

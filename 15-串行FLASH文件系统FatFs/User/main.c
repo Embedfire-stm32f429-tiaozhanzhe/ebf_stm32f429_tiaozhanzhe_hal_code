@@ -4,7 +4,7 @@
   * @author  fire
   * @version V1.0
   * @date    2017-xx-xx
-  * @brief   GPIO输出--使用固件库点亮LED灯
+  * @brief   串行FLASH文件系统FatFs
   ******************************************************************************
   * @attention
   *
@@ -53,7 +53,7 @@ int main(void)
 	LED_BLUE;
 	
 	/* 初始化调试串口，一般为串口1 */
-	 DEBUG_USART_Config();	
+	DEBUG_USART_Config();	
   printf("****** 这是一个SPI FLASH 文件系统实验 ******\r\n");
   
 	//在外部SPI Flash挂载文件系统，文件系统挂载时会对SPI设备初始化
