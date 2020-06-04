@@ -8,9 +8,9 @@
   ******************************************************************************
   * @attention
   *
-  * 实验平台:野火  STM32 F767 开发板  
-  * 论坛    :http://www.firebbs.cn
-  * 淘宝    :http://fire-stm32.taobao.com
+  * 实验平台:野火  STM32 F429 开发板  
+  * 论坛    :http://www.chuxue123.com
+  * 淘宝    :http://firestm32.taobao.com
   *
   ******************************************************************************
   */
@@ -48,7 +48,6 @@ static void SDRAM_GPIO_Config(void)
   FMC_A3_GPIO_CLK;FMC_A4_GPIO_CLK;FMC_A5_GPIO_CLK;
   FMC_A6_GPIO_CLK; FMC_A7_GPIO_CLK; FMC_A8_GPIO_CLK;
   FMC_A9_GPIO_CLK; FMC_A10_GPIO_CLK;FMC_A11_GPIO_CLK; 
-  FMC_A12_GPIO_CLK;
   /*数据信号线*/
   FMC_D0_GPIO_CLK; FMC_D1_GPIO_CLK ; FMC_D2_GPIO_CLK ; 
   FMC_D3_GPIO_CLK ; FMC_D4_GPIO_CLK ; FMC_D5_GPIO_CLK ;
@@ -116,8 +115,6 @@ static void SDRAM_GPIO_Config(void)
   GPIO_InitStructure.Pin = FMC_A11_GPIO_PIN; 
   HAL_GPIO_Init(FMC_A11_GPIO_PORT, &GPIO_InitStructure);
 
-  GPIO_InitStructure.Pin = FMC_A12_GPIO_PIN; 
-  HAL_GPIO_Init(FMC_A12_GPIO_PORT, &GPIO_InitStructure);
   
   
   /*数据信号线 针对引脚配置*/
@@ -287,10 +284,10 @@ static void SDRAM_InitSequence(void)
 /* Step 8 --------------------------------------------------------------------*/
 
   /* 设置刷新计数器 */
-  /*刷新速率 = (COUNT + 1) x SDRAM 频率时钟
-    COUNT =（ SDRAM 刷新周期/行数) - 20*/
-  /* 64ms/8192=7.813us  (7.813 us x FSDCLK) - 20 =683 */
-  HAL_SDRAM_ProgramRefreshRate(&sdramHandle, 683); 
+  /* (15.62 us x Freq) - 20 */
+	  /* Step 6: Set the refresh rate counter */
+  /* Set the device refresh rate */
+  HAL_SDRAM_ProgramRefreshRate(&sdramHandle, 1386); 
 //  FMC_SetRefreshCount(1386);
 //  /* 发送上述命令*/
 //  while(FMC_GetFlagStatus(FMC_BANK_SDRAM, FMC_FLAG_Busy) != RESET)
@@ -366,8 +363,8 @@ void SDRAM_Init(void)
   hsdram1.Instance = FMC_SDRAM_DEVICE;
   /* hsdram1.Init */
   hsdram1.Init.SDBank = FMC_SDRAM_BANK2;
-  hsdram1.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_9;
-  hsdram1.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_13;
+  hsdram1.Init.ColumnBitsNumber = FMC_SDRAM_COLUMN_BITS_NUM_8;
+  hsdram1.Init.RowBitsNumber = FMC_SDRAM_ROW_BITS_NUM_12;
   hsdram1.Init.MemoryDataWidth = FMC_SDRAM_MEM_BUS_WIDTH_16;
   hsdram1.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
   hsdram1.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_3;
