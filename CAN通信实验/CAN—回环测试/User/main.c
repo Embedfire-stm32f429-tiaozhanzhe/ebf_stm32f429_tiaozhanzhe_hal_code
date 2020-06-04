@@ -4,7 +4,7 @@
   * @author  fire
   * @version V1.0
   * @date    2017-xx-xx
-  * @brief   GPIO输出--使用固件库点亮LED灯
+  * @brief   CAN-回环测试
   ******************************************************************************
   * @attention
   *
@@ -41,7 +41,7 @@ int main(void)
     CAN_Config();
 
     printf("\r\n 欢迎使用野火  STM32 F429 开发板。\r\n");
-    printf("\r\n 野火F767 CAN通讯实验例程\r\n");
+    printf("\r\n 野火F429 CAN通讯实验例程\r\n");
 	
 	printf("\r\n 实验步骤：\r\n");
 
