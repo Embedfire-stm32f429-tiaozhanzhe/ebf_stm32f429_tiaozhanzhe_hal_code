@@ -45,7 +45,7 @@ int main(void)
 {
 	uint32_t inerTestValue =10;
 	
-	/* 系统时钟初始化成216 MHz */
+	/* 系统时钟初始化成180 MHz */
 	SystemClock_Config();
 	/* LED 端口初始化 */
 	LED_GPIO_Config();	 
