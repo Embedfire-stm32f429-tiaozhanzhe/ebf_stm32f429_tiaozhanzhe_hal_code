@@ -204,11 +204,34 @@ int main(void)
   SystemClock_Config();  
 	/* 初始化调试串口，一般为串口1 */
 	DEBUG_USART_Config();	
-  printf("******** 这是一个SPI FLASH 文件系统实验 *******\r\n");
+  printf("****** 这是一个SPI FLASH 文件系统实验 ******\r\n");
   
 	//在外部SPI Flash挂载文件系统，文件系统挂载时会对SPI设备初始化
 	res_flash = f_mount(&fs,"1:",1);
-  if(res_flash!=FR_OK)
+	
+/*----------------------- 格式化测试 ---------------------------*/  
+	/* 如果没有文件系统就格式化创建创建文件系统 */
+	if(res_flash == FR_NO_FILESYSTEM)
+	{
+		printf("》FLASH还没有文件系统，即将进行格式化...\r\n");
+    /* 格式化 */
+		res_flash=f_mkfs("1:",0,0);							
+		
+		if(res_flash == FR_OK)
+		{
+			printf("》FLASH已成功格式化文件系统。\r\n");
+      /* 格式化后，先取消挂载 */
+			res_flash = f_mount(NULL,"1:",1);			
+      /* 重新挂载	*/			
+			res_flash = f_mount(&fs,"1:",1);
+		}
+		else
+		{
+			printf("《《格式化失败。》》\r\n");
+			while(1);
+		}
+	}
+  else if(res_flash!=FR_OK)
   {
     printf("！！外部Flash挂载文件系统失败。(%d)\r\n",res_flash);
     printf("！！可能原因：SPI Flash初始化不成功。\r\n");
