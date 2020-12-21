@@ -98,7 +98,7 @@ static void CAN_Mode_Config(void)
 	Can_Handle.Init.BS2=CAN_BS2_3TQ;		   //BTR-TS1 时间段2 占用了3个时间单元	
 	
 	/* CAN Baudrate = 1 MBps (1MBps已为stm32的CAN最高速率) (CAN 时钟频率为 APB 1 = 54 MHz) */
-	Can_Handle.Init.Prescaler =6;		   ////BTR-BRP 波特率分频器  定义了时间单元的时间长度 54/(1+5+3)/5=1 Mbps
+	Can_Handle.Init.Prescaler =5;		   ////BTR-BRP 波特率分频器  定义了时间单元的时间长度 45/(1+5+3)/5=1 Mbps
 	HAL_CAN_Init(&Can_Handle);
 }
 
