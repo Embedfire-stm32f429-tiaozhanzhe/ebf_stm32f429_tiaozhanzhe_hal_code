@@ -53,8 +53,8 @@ int main(void)
 	while(1)
 	{
 		/*按一次按键发送一次数据*/
-//		if(	Key_Scan(KEY1_GPIO_PORT,KEY1_PIN) == KEY_ON)
-//		{
+		if(	Key_Scan(KEY1_GPIO_PORT,KEY1_PIN) == KEY_ON)
+		{
 			LED_BLUE;			
 			/* 装载一帧数据 */
 			CAN_SetMsg();
@@ -67,15 +67,15 @@ int main(void)
 			printf("\r\n发送的报文内容为：\r\n");
 //			printf("\r\n 扩展ID号ExtId：0x%x \r\n",Can_Handle.ExtId);
 			CAN_DEBUG_ARRAY(Can_Handle.pTxMsg->Data,8);     
-//		}
-//		if(flag==1)
-//		{				
-//    	printf("\r\nCAN接收到数据：\r\n");	
-//			CAN_DEBUG_ARRAY(Can_Handle.pRxMsg->Data,8); 			
-//			flag=0;
-//			HAL_Delay(100);
-//			LED_GREEN;
-//		}
+		}
+		if(flag==1)
+		{				
+    	printf("\r\nCAN接收到数据：\r\n");	
+			CAN_DEBUG_ARRAY(Can_Handle.pRxMsg->Data,8); 			
+			flag=0;
+			HAL_Delay(100);
+			LED_GREEN;
+		}
 	
 	
 	}
